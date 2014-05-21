@@ -67,3 +67,55 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    view: { annotations: false }
+
+fos_rest:
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml:  true
+            json: true
+        templating_formats:
+            html: true
+    format_listener:
+        rules:
+            - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    body_listener: true
+
+
+avalanche_imagine:
+    filters:
+        publicaciones_carrusel:
+            type:    thumbnail
+            options: { size: [508, 256], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        publicaciones:
+            type:    thumbnail
+            options: { size: [310, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        autobuses:
+            type:    thumbnail
+            options: { size: [330, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }    
+        inicio_carrusel:
+            type:    thumbnail
+            options: { size: [1025, 537], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        galerias_noticias:
+            type:    thumbnail
+            options: { size: [500, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        galerias_artistas:
+            type:    thumbnail
+            options: { size: [365, 300], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        galerias_productos:
+            type:    thumbnail
+            options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }    
