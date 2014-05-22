@@ -40,14 +40,14 @@
 
     <!-- Page heading -->
     <div class="page-head">
-        <h2 class="pull-left">Experiencias</h2>
+        <h2 class="pull-left">Anuncios</h2>
         <div class="clearfix"></div>
         <!-- Breadcrumb -->
         <div class="bread-crumb">
-            <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a> 
+            <a href="{{path('anuncios')}}"><i class="fa fa-home"></i>Anuncios</a> 
             <!-- Divider -->
             <span class="divider">/</span> 
-            <a href="{{path('experiencias_edit',{'id':entity.id})}}" class="bread-current">Editar autobus</a>
+            <a href="{{path('anuncios_new')}}" class="bread-current">Nuevo anuncio</a>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -61,7 +61,7 @@
                     <div class="widget">
 
                         <div class="widget-head">
-                            <div class="pull-left">Editar experiencia</div>
+                            <div class="pull-left">Nuevo anuncio</div>
                             <!--div class="widget-icons pull-right">
                                 <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                                 <a href="#" class="wsettings"><i class="fa fa-wrench"></i></a>  
@@ -73,18 +73,15 @@
                         <div class="widget-content">
                             <div class="padd">
                                 <!-- Form starts.  -->
-                                <form action="{{ path('experiencias_update', { 'id': entity.id }) }}" class="validate" id="formExperiencias"  method="post" {{ form_enctype(form)}}>
-                                    <input name="_method" value="put" type="hidden"/>
+                                <form action="{{ path('anuncios_create') }}" class="validate" id="formAnuncios" method="post" {{ form_enctype(form)}}>
                                     {{form_widget(form)}}
                                 </form>
                             </div>
                         </div>
                         <div class="widget-foot">
                             <button id="botonRegresar" class="btn btn-default">Regresar</button>
-                            <button id="botonGuardar" class="btn btn-primary">Guardar cambios</button>
-                            <div style="float: left; margin-right: 3px;">
-                            {{form_widget(delete_form)}}
-                            </div>        
+                            <button id="botonGuardar" class="btn btn-primary">Crear anuncio</button>
+                            
                         </div>
                     </div>  
 
@@ -136,6 +133,7 @@
 <script src="{{asset('js/jquery.uniform.min.html')}}"></script> <!-- jQuery Uniform -->
 <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
 <script src="{{asset('js/bootstrap-switch.min.js')}}"></script> <!-- Bootstrap Toggle -->
+<script src="{{asset('js/filter.js')}}"></script> <!-- Filter for support page -->
 <script src="{{asset('js/custom.js')}}"></script> <!-- Custom codes -->
 <script src="{{asset('js/charts.js')}}"></script> <!-- Charts & Graphs -->
 
@@ -145,11 +143,11 @@ $(document).ready(function(){
   $(".validate").validationEngine();
 
   $("#botonRegresar").on("click",function(){
-    location.href="{{path('experiencias')}}";
+    location.href="{{path('anuncios')}}";
   });
   
   $("#botonGuardar").on("click",function(){
-    $("#formExperiencias").submit();
+    $("#formAnuncios").submit();
   });
   
   {% if errores | length > 0 %}
@@ -166,5 +164,7 @@ $(document).ready(function(){
 });
 
 </script>
-{{ tinymce_init() }}   
+{{ tinymce_init() }}
 {% endblock %}
+
+

@@ -1,29 +1,28 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Controller;
+namespace Richpolis\PublicidadBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Richpolis\FrontendBundle\Entity\Experiencias;
-use Richpolis\FrontendBundle\Form\ExperienciasType;
-
+use Richpolis\PublicidadBundle\Entity\Anuncios;
+use Richpolis\PublicidadBundle\Form\AnunciosType;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 /**
- * Experiencias controller.
+ * Anuncios controller.
  *
- * @Route("/backend/experiencias")
+ * @Route("/anuncios")
  */
-class ExperienciasController extends Controller
+class AnunciosController extends Controller
 {
 
     /**
-     * Lists all Experiencias entities.
+     * Lists all Anuncios entities.
      *
-     * @Route("/", name="experiencias")
+     * @Route("/", name="anuncios")
      * @Method("GET")
      * @Template()
      */
@@ -31,22 +30,22 @@ class ExperienciasController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FrontendBundle:Experiencias')->findAll();
+        $entities = $em->getRepository('PublicidadBundle:Anuncio')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new Experiencias entity.
+     * Creates a new Anuncios entity.
      *
-     * @Route("/", name="experiencias_create")
+     * @Route("/", name="anuncios_create")
      * @Method("POST")
-     * @Template("FrontendBundle:Experiencias:new.html.twig")
+     * @Template("PublicidadBundle:Anuncios:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Experiencias();
+        $entity = new Anuncios();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -55,7 +54,7 @@ class ExperienciasController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('experiencias_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('anuncios_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -66,16 +65,16 @@ class ExperienciasController extends Controller
     }
 
     /**
-    * Creates a form to create a Experiencias entity.
+    * Creates a form to create a Anuncios entity.
     *
-    * @param Experiencias $entity The entity
+    * @param Anuncios $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Experiencias $entity)
+    private function createCreateForm(Anuncios $entity)
     {
-        $form = $this->createForm(new ExperienciasType(), $entity, array(
-            'action' => $this->generateUrl('experiencias_create'),
+        $form = $this->createForm(new AnunciosType(), $entity, array(
+            'action' => $this->generateUrl('anuncios_create'),
             'method' => 'POST',
         ));
 
@@ -85,17 +84,17 @@ class ExperienciasController extends Controller
     }
 
     /**
-     * Displays a form to create a new Experiencias entity.
+     * Displays a form to create a new Anuncios entity.
      *
-     * @Route("/new", name="experiencias_new")
+     * @Route("/new", name="anuncios_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Experiencias();
+        $entity = new Anuncios();
         $em = $this->getDoctrine()->getManager();
-        $max = $em->getRepository('FrontendBundle:Experiencias')->getMaxPosicion();
+        $max = $em->getRepository('PublicidadBundle:Anuncio')->getMaxPosicion();
         if($max == null){
             $max=0;
         }
@@ -109,9 +108,9 @@ class ExperienciasController extends Controller
     }
 
     /**
-     * Finds and displays a Experiencias entity.
+     * Finds and displays a Anuncios entity.
      *
-     * @Route("/{id}", name="experiencias_show")
+     * @Route("/{id}", name="anuncios_show")
      * @Method("GET")
      * @Template()
      */
@@ -119,10 +118,10 @@ class ExperienciasController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+        $entity = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Experiencias entity.');
+            throw $this->createNotFoundException('Unable to find Anuncios entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -134,9 +133,9 @@ class ExperienciasController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Experiencias entity.
+     * Displays a form to edit an existing Anuncios entity.
      *
-     * @Route("/{id}/edit", name="experiencias_edit")
+     * @Route("/{id}/edit", name="anuncios_edit")
      * @Method("GET")
      * @Template()
      */
@@ -144,10 +143,10 @@ class ExperienciasController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+        $entity = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Experiencias entity.');
+            throw $this->createNotFoundException('Unable to find Anuncios entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -162,16 +161,16 @@ class ExperienciasController extends Controller
     }
 
     /**
-    * Creates a form to edit a Experiencias entity.
+    * Creates a form to edit a Anuncios entity.
     *
-    * @param Experiencias $entity The entity
+    * @param Anuncios $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Experiencias $entity)
+    private function createEditForm(Anuncios $entity)
     {
-        $form = $this->createForm(new ExperienciasType(), $entity, array(
-            'action' => $this->generateUrl('experiencias_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new AnunciosType(), $entity, array(
+            'action' => $this->generateUrl('anuncios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -180,20 +179,20 @@ class ExperienciasController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Experiencias entity.
+     * Edits an existing Anuncios entity.
      *
-     * @Route("/{id}", name="experiencias_update")
+     * @Route("/{id}", name="anuncios_update")
      * @Method("PUT")
-     * @Template("FrontendBundle:Experiencias:edit.html.twig")
+     * @Template("PublicidadBundle:Anuncios:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+        $entity = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Experiencias entity.');
+            throw $this->createNotFoundException('Unable to find Anuncios entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -203,7 +202,7 @@ class ExperienciasController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('experiencias_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('anuncios_edit', array('id' => $id)));
         }
 
         return array(
@@ -214,9 +213,9 @@ class ExperienciasController extends Controller
         );
     }
     /**
-     * Deletes a Experiencias entity.
+     * Deletes a Anuncios entity.
      *
-     * @Route("/{id}", name="experiencias_delete")
+     * @Route("/{id}", name="anuncios_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -226,21 +225,21 @@ class ExperienciasController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+            $entity = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Experiencias entity.');
+                throw $this->createNotFoundException('Unable to find Anuncios entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('experiencias'));
+        return $this->redirect($this->generateUrl('anuncios'));
     }
 
     /**
-     * Creates a form to delete a Experiencias entity by id.
+     * Creates a form to delete a Anuncios entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -249,7 +248,7 @@ class ExperienciasController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('experiencias_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('anuncios_delete', array('id' => $id)))
             ->setMethod('DELETE')
             /*->add('submit', 'submit', array(
                 'label' => 'Eliminar',
@@ -263,7 +262,7 @@ class ExperienciasController extends Controller
     /**
      * Ordenar las posiciones de los autobuses.
      *
-     * @Route("/ordenar/registros", name="experiencias_ordenar")
+     * @Route("/ordenar/registros", name="anuncios_ordenar")
      * @Method("PATCH")
      */
     public function ordenarRegistrosAction(Request $request) {
@@ -272,7 +271,7 @@ class ExperienciasController extends Controller
             $em = $this->getDoctrine()->getManager();
             $result['ok'] = true;
             foreach ($registro_order as $order => $id) {
-                $registro = $em->getRepository('FrontendBundle:Experiencias')->find($id);
+                $registro = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
                 if ($registro->getPosition() != ($order + 1)) {
                     try {
                         $registro->setPosition($order + 1);

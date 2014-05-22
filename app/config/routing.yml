@@ -1,7 +1,7 @@
 publicidad:
     resource: "@PublicidadBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /backend
 
 galerias:
     resource: "@GaleriasBundle/Controller/"

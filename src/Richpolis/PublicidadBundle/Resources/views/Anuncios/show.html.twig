@@ -40,15 +40,15 @@
 
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Experiencias</h2>
+            <h2 class="pull-left">Anuncios</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
                     <Divider>
                         <span class="divider">/</span> 
-                        <a href="{{path('experiencias')}}" class="bread-current">Experiencias</a>
-                        <a href="{{path('experiencias_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear autobus</a>
+                        <a href="{{path('anuncios')}}" class="bread-current">Anuncios</a>
+                        <a href="{{path('anuncios_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear anuncio</a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -65,7 +65,7 @@
                                         <div class="col-md-12">
                                             <div class="widget">
                                                 <div class="widget-head">
-                                                    <div class="pull-left">Experiencia de "{{entity.autor}}"</div>
+                                                    <div class="pull-left">Anuncio</div>
                                                     <div class="clearfix"></div>
                                                 </div>
 
@@ -77,20 +77,8 @@
                                                                     <td>{{entity.id}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Contenido Español:</td>
-                                                                    <td>{{ entity.contenidoEs | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Ingles:</td>
-                                                                    <td>{{ entity.contenidoEn | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contenido Frances:</td>
-                                                                    <td>{{ entity.contenidoFr | raw }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Autor:</td>
-                                                                    <td>{{ entity.autor }}</td>
+                                                                    <td>Anuncio:</td>
+                                                                    <td>{{ entity.contenido | raw }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Activo?:</td>
@@ -108,10 +96,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="widget-foot">
-                                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('experiencias')}}')">Regresar</button>
-                                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('experiencias_edit',{id: entity.id})}}')">Editar</button>
+                                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('anuncios')}}')">Regresar</button>
+                                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('anuncios_edit',{id: entity.id})}}')">Editar</button>
                                                     <div style="float: left; margin-right: 3px;">
-                                                        <form id="formEliminar" action="{{ path('experiencias_delete', { 'id': entity.id }) }}" method="post">
+                                                        <form id="formEliminar" action="{{ path('anuncios_delete', { 'id': entity.id }) }}" method="post">
                                                                 {{ form_widget(delete_form) }}
                                                                 <button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                                                         </form>

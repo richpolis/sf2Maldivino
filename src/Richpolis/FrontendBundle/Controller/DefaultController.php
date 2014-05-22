@@ -24,47 +24,28 @@ use \Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
 class DefaultController extends Controller
 {
     /**
-     * Entrada por default.
-     *
-     * @Route("/")
+     * @Route("/", name="homepage")
+     * @Template()
      */
     public function entradaAction()
     {
-        $locale = $this->getRequest()->getLocale();
-        return $this->redirect($this->generateUrl('homepage',array('_locale'=>$locale)));
-    }
-    
-    /**
-     * @Route("/{_locale}/", name="homepage", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     * @Template()
-     */
-    public function indexAction()
-    {
         $em = $this->getDoctrine()->getManager();
-        $categoriasPublicacion = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->
-                        getCategoriaPublicacionEnCarrusel();
-        $experiencias = $em->getRepository('FrontendBundle:Experiencias')
-                ->getExperienciasActivas();
-        shuffle($experiencias);
-        $newsletter = new UsuarioNewsletter();
-        $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
         
         $inicio = $em->getRepository('PaginasBundle:Pagina')
                 ->findOneBy(array('pagina'=>'inicio'));
         
         return array(
-            'categoriasPublicacion'=>$categoriasPublicacion,
-            'experiencias'=>$experiencias,
-            'form'=>$form->createView(),
             'pagina'=>$inicio,
         );
+		        
     }
+
     
     /**
-     * @Route("/{_locale}/nosotros", name="frontend_nosotros", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/quienes/somos", name="frontend_quienes_somos")
      * @Template()
      */
-    public function nosotrosAction()
+    public function quienesSomosAction()
     {
         $em = $this->getDoctrine()->getManager();
         $nosotros = $em->getRepository('PaginasBundle:Pagina')
@@ -75,30 +56,33 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/{_locale}/autobuses", name="frontend_autobuses", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     * @Template()
-     */
-    public function autobusesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $autobuses = $em->getRepository('FrontendBundle:Autobus')
-                ->findActivos();
-        return array(
-            'autobuses'=>$autobuses,
-        );
-    }
-    
-    /**
-     * @Route("/{_locale}/servicios", name="frontend_servicios", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/servicios", name="frontend_servicios")
      * @Template()
      */
     public function serviciosAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $servicios = $em->getRepository('PaginasBundle:Pagina')
-                ->findOneBy(array('pagina'=>'servicios'));
+        $autobuses = $em->getRepository('PublicacionesBundle:Servicio')
+                ->findActivos();
         return array(
-            'servicios'=>$servicios
+            'servicios'=>$servicios,
+        );
+    }
+    
+    /**
+     * @Route("/productos", name="frontend_productos")
+     * @Template()
+     */
+    public function serviciosAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		$categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+					->findActivos();
+        $productos = $em->getRepository('PublicacionesBundle:Publicacion')
+                	->findActivos();
+        return array(
+			'productos'=>$productos'productos'=>$productos
+            'productos'=>$productos
         );
     }
     

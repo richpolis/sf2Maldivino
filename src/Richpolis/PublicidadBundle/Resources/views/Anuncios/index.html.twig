@@ -47,8 +47,8 @@
           <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
           <Divider>
           <span class="divider">/</span> 
-          <a href="{{path('experiencias')}}" class="bread-current">Experiencias</a>
-          <a href="{{path('experiencias_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear experiencia</a>
+          <a href="{{path('anuncios')}}" class="bread-current">Anuncios</a>
+          <a href="{{path('anuncios_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear anuncio</a>
         </div>
         
         <div class="clearfix"></div>
@@ -70,7 +70,7 @@
                 <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">Registro de experiencias</div>
+                  <div class="pull-left">Registro de anuncios</div>
                   <!--div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                     <a href="#" class="wsettings"><i class="fa fa-wrench"></i></a>  
@@ -85,8 +85,7 @@
                       <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Experiencia</th>
-                            <th>Autor</th>
+                            <th>Anuncio</th>
                             <th>Activo?</th>
                             <th>Actions</th>
                         </tr>
@@ -94,9 +93,8 @@
                       <tbody id="cuerpoTabla">
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
-                                <td><a href="{{ path('experiencias_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                                <td>{{ entity.contenidoEs | raw  }}</td>
-                                <td>{{ entity.autor }}</td>
+                                <td><a href="{{ path('anuncios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.contenido | raw  }}</td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>
@@ -105,8 +103,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button onclick="javascript:editarRegistro('{{ path('experiencias_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('experiencias_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('anuncios_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('anuncios_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
                                 </td>
                                 
                             </tr>
@@ -210,7 +208,7 @@ function sendOrderToServer() {
     $(".loader").fadeIn();
     var order = $("#cuerpoTabla").sortable('serialize');
     $.ajax({
-       url: '{{path('experiencias_ordenar')}}?' + order,
+       url: '{{path('anuncios_ordenar')}}?' + order,
        type: 'PATCH',
        data: order,
        dataType: 'json',

@@ -1,12 +1,12 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Form;
+namespace Richpolis\PublicidadBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ExperienciasType extends AbstractType
+class AnuncioType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,35 +15,14 @@ class ExperienciasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenidoEs',null,array(
-                'label'=>'Contenido español',
+            ->add('contenido',null,array(
+                'label'=>'Contenido',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'cleditor tinymce form-control placeholder',
                    'data-theme' => 'advanced',
                     )
                 ))
-            ->add('contenidoEn',null,array(
-                'label'=>'Contenido ingles',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))
-            ->add('contenidoFr',null,array(
-                'label'=>'Contenido frances',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))    
-            ->add('autor','text',array('label'=>'Autor','attr'=>array(
-                'class'=>'validate[required] form-control placeholder',
-                'placeholder'=>'Autor',
-                'data-bind'=>'value: autor'
-             )))
             ->add('position','hidden')
             ->add('isActive','hidden')
         ;
@@ -55,7 +34,7 @@ class ExperienciasType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Richpolis\FrontendBundle\Entity\Experiencias'
+            'data_class' => 'Richpolis\PublicidadBundle\Entity\Anuncio'
         ));
     }
 
@@ -64,6 +43,6 @@ class ExperienciasType extends AbstractType
      */
     public function getName()
     {
-        return 'richpolis_frontendbundle_experiencias';
+        return 'richpolis_publicidadbundle_anuncio';
     }
 }

@@ -18,7 +18,7 @@ use Richpolis\GaleriasBundle\Entity\Galeria;
 /**
  * Servicio controller.
  *
- * @Route("/backend/servicios")
+ * @Route("/servicios")
  */
 class ServiciosController extends Controller
 {
