@@ -182,6 +182,7 @@ class PublicacionController extends Controller {
      */
     public function newAction() {
         $publicacion = new Publicacion();
+        
         $max = $this->getDoctrine()->getRepository('PublicacionesBundle:Publicacion')
                 ->getMaxPosicion();
 

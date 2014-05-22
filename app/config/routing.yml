@@ -1,3 +1,8 @@
+publicidad:
+    resource: "@PublicidadBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 galerias:
     resource: "@GaleriasBundle/Controller/"
     type:     annotation
