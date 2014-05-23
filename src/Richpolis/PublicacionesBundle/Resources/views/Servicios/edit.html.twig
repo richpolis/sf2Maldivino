@@ -40,14 +40,14 @@
 
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Autobuses</h2>
+            <h2 class="pull-left">Servicios</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a> 
                 <!-- Divider -->
                 <span class="divider">/</span> 
-                <a href="{{path('autobuses_edit',{'id':entity.id})}}" class="bread-current">Editar autobus</a>
+                <a href="{{path('servicios_edit',{'id':entity.id})}}" class="bread-current">Editar servicio</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -61,7 +61,7 @@
                         <div class="widget">
 
                             <div class="widget-head">
-                                <div class="pull-left">Editar autobus "{{entity.nombre}}"</div>
+                                <div class="pull-left">Editar servicio "{{entity.nombre}}"</div>
                                 <!--div class="widget-icons pull-right">
                                     <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                                     <a href="#" class="wsettings"><i class="fa fa-wrench"></i></a>  
@@ -73,27 +73,9 @@
                             <div class="widget-content">
                                 <div class="padd">
                                     <!-- Form starts.  -->
-                                    <form action="{{ path('autobuses_update', { 'id': entity.id }) }}" class="validate" id="formautobuss"  method="post" {{ form_enctype(form)}}>
+                                    <form action="{{ path('servicios_update', { 'id': entity.id }) }}" class="validate" id="formservicios"  method="post" {{ form_enctype(form)}}>
                                         <input name="_method" value="patch" type="hidden"/>
-                                        <fieldset>
-                                            <legend>Español:</legend>
-                                            {{form_row(form.descripcionEs)}}
-                                            {{form_row(form.detallesEs)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Ingles:</legend>
-                                            {{form_row(form.descripcionEn)}}
-                                            {{form_row(form.detallesEn)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Frances:</legend>
-                                            {{form_row(form.descripcionFr)}}
-                                            {{form_row(form.detallesFr)}}
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Generales:</legend>
-                                            {{form_rest(form)}}
-                                        </fieldset>
+                                        {{form_widget(edit_form)}}
                                     </form>
                                     <br/>
                                     {% if entity.imagen | length > 0 %}
@@ -170,11 +152,11 @@
             $(".validate").validationEngine();
 
             $("#botonRegresar").on("click", function() {
-                location.href = "{{path('autobuses')}}";
+                location.href = "{{path('servicios')}}";
             });
 
             $("#botonGuardar").on("click", function() {
-                $("#formautobuss").submit();
+                $("#formservicios").submit();
             });
 
         {% if errores | length > 0 %}

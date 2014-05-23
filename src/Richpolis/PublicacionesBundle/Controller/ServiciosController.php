@@ -9,9 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\PublicacionesBundle\Entity\Servicio;
 use Richpolis\PublicacionesBundle\Form\ServicioType;
-
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
-
 use Richpolis\BackendBundle\Utils\qqFileUploader;
 use Richpolis\GaleriasBundle\Entity\Galeria;
 
