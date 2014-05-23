@@ -2,16 +2,10 @@
 
 namespace Richpolis\BackendBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
-
-use Richpolis\PublicacionesBundle\Entity\Publicacion;
-use Richpolis\PublicacionesBundle\Form\PublicacionType;
-
-use Richpolis\PublicacionesBundle\Entity\Galeria;
 
 class DefaultController extends Controller
 {

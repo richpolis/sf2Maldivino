@@ -30,9 +30,9 @@ class ServicioRepository extends EntityRepository
         $query=$em->createQuery('
                SELECT a
                FROM PublicacionesBundle:Servicio a 
-               WHERE a.isActive = :autobus
+               WHERE a.isActive = :servicio
                ORDER BY a.position ASC
-        ')->setParameters(array('autobus'=> true,'galeria'=>true));
+        ')->setParameters(array('servicio'=> true));
         
         return $query->getResult();
     }

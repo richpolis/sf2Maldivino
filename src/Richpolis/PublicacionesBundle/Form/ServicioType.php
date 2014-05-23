@@ -15,55 +15,15 @@ class AutobusType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre','text',array(
-                'label'=>'Autobus','required'=>true,'attr'=>array(
+            ->add('servicio','text',array(
+                'label'=>'Servicio','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
                     'placeholder'=>'Autobus',
                     'data-bind'=>'value: autobus'
                     )
                 ))
-            ->add('descripcionEs',null,array(
-                'label'=>'Descripcion español',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))    
-            ->add('detallesEs',null,array(
-                'label'=>'Detalles español',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))
-            ->add('descripcionEn',null,array(
-                'label'=>'Descripcion ingles',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))    
-            ->add('detallesEn',null,array(
-                'label'=>'Detalles ingles',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))
-            ->add('descripcionFr',null,array(
-                'label'=>'Descripcion frances',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))    
-            ->add('detallesFr',null,array(
-                'label'=>'Detalles frances',
+            ->add('descripcion',null,array(
+                'label'=>'Descripcion',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'cleditor tinymce form-control placeholder',
@@ -72,12 +32,12 @@ class AutobusType extends AbstractType
                 ))
              ->add('file','file',array('label'=>'Imagen','attr'=>array(
                 'class'=>'form-control placeholder',
-                'placeholder'=>'Imagen pagina',
-                'data-bind'=>'value: imagen pagina'
+                'placeholder'=>'Imagen',
+                'data-bind'=>'value: imagen'
              )))  
             ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
                 'class'=>'checkbox-inline',
-                'placeholder'=>'Es activo',
+                'placeholder'=>'Es activo?',
                 'data-bind'=>'value: isActive'
                 )))    
             ->add('imagen','hidden')

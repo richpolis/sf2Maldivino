@@ -104,9 +104,9 @@ avalanche_imagine:
         publicaciones:
             type:    thumbnail
             options: { size: [310, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        autobuses:
+        botellas:
             type:    thumbnail
-            options: { size: [330, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }    
+            options: { size: [199, 331], mode: outbound, cache_type: public, cache_expires: '2 weeks' }    
         inicio_carrusel:
             type:    thumbnail
             options: { size: [1025, 537], mode: outbound, cache_type: public, cache_expires: '2 weeks' }

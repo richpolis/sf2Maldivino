@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Richpolis\BackendBundle\Utils\Youtube;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 use Richpolis\FrontendBundle\Entity\Contacto;
@@ -18,8 +17,6 @@ use Richpolis\FrontendBundle\Form\ContactoType;
 use Richpolis\FrontendBundle\Entity\Cotizador;
 use Richpolis\FrontendBundle\Form\CotizadorType;
 
-use \Richpolis\FrontendBundle\Entity\UsuarioNewsletter;
-use \Richpolis\FrontendBundle\Form\UsuarioNewsletterType;
 
 class DefaultController extends Controller
 {
@@ -27,7 +24,7 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      * @Template()
      */
-    public function entradaAction()
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -40,6 +37,30 @@ class DefaultController extends Controller
 		        
     }
 
+     private function getPublicacionesPorFilas($categorias){
+        $arreglo = array();
+        $largo = 0;
+        $paginas = 0;
+        $contPagina = 0;
+        $cont=0;
+        foreach($categorias as $categoria){
+            $arreglo[$categoria->getSlug()]=array();
+            $largo = count($categoria->getPublicaciones());
+            $paginas = ceil($largo/3);
+            $contPagina = 0;
+            $arreglo[$categoria->getSlug()][$contPagina]=array();
+            $cont=0;
+            foreach($categoria->getPublicaciones() as $publicacion){
+                $arreglo[$categoria->getSlug()][$contPagina][$cont++]=$publicacion;
+                if($cont==3){
+                    $cont=0;
+                    $contPagina++;
+                }
+            }
+        }
+        return $arreglo;
+    }
+    
     
     /**
      * @Route("/quienes/somos", name="frontend_quienes_somos")
@@ -73,61 +94,31 @@ class DefaultController extends Controller
      * @Route("/productos", name="frontend_productos")
      * @Template()
      */
-    public function serviciosAction()
+    public function productosAction() 
     {
-        $em = $this->getDoctrine()->getManager();
-		$categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
-					->findActivos();
-        $productos = $em->getRepository('PublicacionesBundle:Publicacion')
-                	->findActivos();
-        return array(
-			'productos'=>$productos'productos'=>$productos
-            'productos'=>$productos
-        );
+        return array();
     }
-    
-    
+
     /**
-     * @Route("/{_locale}/tours", name="frontend_tours", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/maldivino/express", name="frontend_maldivino_express")
      * @Template()
      */
-    public function toursAction()
+    public function expressAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $categoriasPublicacion = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->
-                        getCategoriaPublicacionActivas();
-        $categorias = $this->getPublicacionesPorFilas($categoriasPublicacion);
+        
+        $express = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'express'));
+        
         return array(
-          'categorias'=>$categorias,  
+            'pagina'=>$express,
         );
     }
     
-    private function getPublicacionesPorFilas($categorias){
-        $arreglo = array();
-        $largo = 0;
-        $paginas = 0;
-        $contPagina = 0;
-        $cont=0;
-        foreach($categorias as $categoria){
-            $arreglo[$categoria->getSlug()]=array();
-            $largo = count($categoria->getPublicaciones());
-            $paginas = ceil($largo/3);
-            $contPagina = 0;
-            $arreglo[$categoria->getSlug()][$contPagina]=array();
-            $cont=0;
-            foreach($categoria->getPublicaciones() as $publicacion){
-                $arreglo[$categoria->getSlug()][$contPagina][$cont++]=$publicacion;
-                if($cont==3){
-                    $cont=0;
-                    $contPagina++;
-                }
-            }
-        }
-        return $arreglo;
-    }
+   
     
     /**
-     * @Route("/{_locale}/contacto", name="frontend_contacto", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/contacto", name="frontend_contacto")
      * @Method({"GET", "POST"})
      */
     public function contactoAction(Request $request) {
@@ -191,7 +182,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/cotizador", name="frontend_cotizador", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/cotizador", name="frontend_cotizador")
      * @Method({"GET", "POST"})
      * @Template("FrontendBundle:Default:cotizador.html.twig")
      */
@@ -245,196 +236,49 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/{_locale}/form/newsletter", name="frontend_form_newsletter", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     * @Method({"GET", "POST"})
-     */
-    public function newsletterAction() {
-        $newsletter = new UsuarioNewsletter();
-        $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
-        $request = $this->getRequest();
-        
-        if ($request->getMethod() == 'POST') {
-            
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $nuevo=$form->getData();
-                
-                $em = $this->getDoctrine()->getManager();
-                $usuario = $em->getRepository('FrontendBundle:UsuarioNewsletter')->findOneBy(array(
-                    'email'=>$nuevo->getEmail() 
-                ));
-                
-                if(!$usuario){
-                    $em->persist($nuevo);
-                    $em->flush();
-                }
-               
-                $ok=true;
-                $error=false;
-                $mensaje="Gracias se ha guardado el registro";
-                $newsletter = new UsuarioNewsletter();
-                $form = $this->createForm(new UsuarioNewsletterType(), $newsletter);
-                
-            }else{
-                $ok=false;
-                $error=true;
-                $mensaje="El mensaje no se ha podido enviar";
-            }
-        }else{
-            $ok=false;
-            $error=false;
-            $mensaje="";
-        }
-        
-        if($request->isXmlHttpRequest()){
-            $vista = $this->renderView('FrontendBundle:Default:formNewsletter.html.twig',array(
-                'form' => $form->createView(),'ok'=>$ok,'error'=>$error,'mensaje'=>$mensaje,
-            ));
-            $arreglo = array('vista'=>$vista,'ok'=>$ok,'error'=>$error,'mensaje'=>$mensaje);
-            $response = new JsonResponse();
-            $response->setData($arreglo);
-            return $response;
-        }
-        
-        return $this->render("FrontendBundle:Default:formNewsletter.html.twig",array(
-              'form' => $form->createView(),
-              'ok'=>$ok,
-              'error'=>$error,
-              'mensaje'=>$mensaje,
-        ));
-    }
-    
-    /**
-     * Lista los ultimos tweets.
-     *
-     * @Route("/last-tweets/{username}/", name="last_tweets")
-     */
-    public function lastTweetsAction($username, $limit = 10, $age = null)
-    {
-        /* @var $twitter FetcherInterface */
-        $twitter = $this->get('knp_last_tweets.last_tweets_fetcher');
-
-        try {
-            $tweets = $twitter->fetch($username, $limit);
-        } catch (TwitterException $e) {
-            $tweets = array();
-        }
-
-        $response = $this->render('FrontendBundle:Default:lastTweets.html.twig', array(
-            'username' => $username,
-            'tweets'   => $tweets,
-        ));
-
-        if ($age) {
-            $response->setSharedMaxAge($age);
-        }
-
-        return $response;
-    }
-    
-    /**
-     * @Route("/api/{_locale}/autobuses", name="get_autobuses", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
+     * @Route("/api/categorias", name="get_categorias")
      * @Method({"GET"})
      */
-    public function getAutobusesAction(Request $request)
+    public function getCategoriasAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $autobuses = $em->getRepository('FrontendBundle:Autobus')
-                ->findActivos();
-        $locale = $request->getLocale();
+        $categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                ->getCategoriasActivas();
         
-        $resultados = $this->decodeAutobuses($locale,$autobuses);
+        $resultados = $this->decodeCategorias($categorias);
         
         $response = new JsonResponse();
         $response->setData($resultados);
         return $response;
     }
     
-    /**
-     * @Route("/api/{_locale}/autobuses/{id}", name="get_autobus", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     * @Method({"GET"})
-     */
-    public function getAutobusAction(Request $request,$id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $autobus = $em->getRepository('FrontendBundle:Autobus')
-                ->find($id);
-        
-        $locale = $request->getLocale();
-        
-        $resultados = $this->decodeAutobuses($locale,array($autobus));
-        
-        $response = new JsonResponse();
-        $response->setData($resultados[0]);
-        return $response;
-    }
-    
-    private function decodeAutobuses($locale,$autobuses){
+    private function decodeCategorias($categorias){
         $arreglo = array();
         $cont = 0;
-        $largo = count($autobuses);
+        $largo = count($categorias);
         $avalancheService = $this->get('imagine.cache.path.resolver');
-        foreach($autobuses as $autobus){
+        foreach($categorias as $categoria){
             $item = array(
-              'id'=>$autobus->getId(),
-              'nombre'=>$autobus->getNombre(),
-              'descripcion'=>$autobus->getDescripcion($locale),
-              'detalles'=>$autobus->getDetalles($locale),
-              'imagen'=>$autobus->getWebPath(),
-              'galerias'=>array(),
+              'id'=>$categoria->getId(),
+              'nombre'=>$categoria->getNombre(),
+              'position'=>$categoria->getPosition(),
+              'isActive'=>$categoria->getIsActive(),
+              'slug'=>$categoria->getSlug(),
+              'publicaciones'=>array(),
             );
-            $contGaleria =0;
-            $galerias = array();
-            foreach($autobus->getGalerias() as $galeria){
-                $galerias[$contGaleria++]=array(
-                  'titulo'=>$galeria->getTitulo(),
-                  'descripcion'=>$galeria->getDescripcion(),
-                  'archivo'=>$galeria->getWebPath(),
-                  'isImagen'=>$galeria->getIsImagen(),  
-                  'thumbnail'=>($galeria->getIsImagen()?$avalancheService->getBrowserPath($galeria->getWebPath(), 'publicaciones'):$galeria->getThumbnailWebPath()),
-                  'logo'=>($galeria->getTitulo()=="logo"?true:false),  
+            $contPublicacion = 0;
+            $publicaciones = array();
+            foreach($categoria->getPublicaciones() as $publicacion){
+                $publicaciones[$contPublicacion++]=array(
+                  'botella'=>$publicacion->getTitulo(),
+                  'descripcion'=>$publicacion->getDescripcion(),
+                  'thumbnail'=>$avalancheService->getBrowserPath($publicacion->getWebPath(), 'botellas'),
+                  'precio'=>$publicacion->getPrecio(),  
                 );
             }
-            if(isset($autobuses[$cont+1])){
-                $item['siguiente']=$autobuses[$cont+1]->getId();
-                $item['siguienteNombre']=$autobuses[$cont+1]->getNombre();
-            }
-            if($cont>0){
-                $item['anterior']=$autobuses[$cont-1]->getId();
-                $item['anteriorNombre']=$autobuses[$cont-1]->getNombre();
-            }
-            $item['galerias']=$galerias;
+            $item['publicaciones']=$publicaciones;
             $arreglo[$cont++]= $item;
         }
         return $arreglo;
     }
-    
-    /**
-     * @Route("/{_locale}/mensaje/sitio", name="get_mensaje_sitio", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     * @Method({"GET"})
-     * @Template("FrontendBundle:Default:mensaje.html.twig")
-     */
-    public function getMensajeSitioAction(Request $request)
-    {
-        
-        $em = $this->getDoctrine()->getManager();
-        $locale = $request->getLocale();
-        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
-                ->findOneBy(array('slug'=>'aviso-'.$locale));
-        
-        return array('mensaje'=>$configuracion->getTexto());
-    }
-	
-    /**
-     * @Route("/{_locale}/prueba", name="homepage_prueba", defaults={"_locale" = "es"}, requirements={"_locale" = "en|es|fr"})
-     */
-    public function pruebaAction() 
-    {
-        $youtube = RpsStms::getTitleAndImageVideoYoutube('http://youtu.be/vwndyuafDkY');
-        $response = new JsonResponse();
-        $response->setData($youtube);
-        return $response;
-    }
-
 }
