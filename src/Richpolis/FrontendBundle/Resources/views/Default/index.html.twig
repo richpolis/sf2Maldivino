@@ -18,25 +18,9 @@
 {% block header_class 'inicio' %}
 
 {% block contenido %}
-            <div class="cotizador-promociones">
-                <div class="cotizador-linea">
-                    <a href="{{path('frontend_cotizador')}}" style="color: white;">
-                        {{"Visite nuestro cotizador en linea"|trans}}
-                    </a>
-                </div>
-                <div class="newsletter">
-                    {{"Reciba ofertas y promociones en su correo"|trans}}
-                    <span class="newsletter-correo">
-                        <a href="#" data-toggle="modal" data-target="#formNewsletter" class="newsletter">   
-                        </a>    
-                    </span>
-                </div>
-            </div>
-            <article class="destinos-eventos">
-                <div class="destinos">
-                    <span class="titulo">{{"destinos"|trans}}</span>
-                    <ul class="sliderDestinos">
-                        {% for categoria in categoriasPublicacion if categoria.slug == "destinos" %}
+            <article class="slide-principal">
+                <div class="slide-contenedor">
+                    <ul class="slideGaleria">
                             {% for publicacion in categoria.publicaciones %}
                             <li>
                                 <a href="{{path('frontend_tours')}}#destino-{{publicacion.slug}}">
@@ -50,45 +34,11 @@
                                 </a>
                             </li>
                             {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="eventos">
-                    <span class="titulo">{{"eventos"|trans}}</span>
-                    <ul class="sliderEventos">
-                        {% for categoria in categoriasPublicacion if categoria.slug == "eventos" %}
-                            {% for publicacion in categoria.publicaciones %}
-                            <li>
-                                <a href="{{path('frontend_tours')}}#evento-{{publicacion.slug}}">
-                                    <img src="{{ publicacion.webPath | apply_filter('publicaciones_carrusel')  }}" title="">
-                                    <div class="descripcion-publicacion" style="width: 100%;">
-										<h3>
-											{{publicacion.titulo(locale)}}
-										</h3>
-										{{ publicacion.descripcion(locale)|raw }}
-									</div>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        {% endfor %}
                     </ul>
                 </div>
             </article>
             <article class="twitters">
-                {# render(controller("FrontendBundle:Default:lastTweets",{'username': 'TurismoPlusMG'})) #}
-                <div class="experiencias">
-                    <span class="titulo-experiencias">{{"Experiencias MG"|trans}}</span>
-                    <div class="contenedor-experiencias carousel-inner">
-                        {% for experiencia in experiencias %}
-                        <div class="experiencia item {% if loop.index == 1%}active{% endif %}">
-                                {{experiencia.contenido(locale) | raw }}
-                            <span class="autor-experiencia">
-                                -{{experiencia.autor}}
-                            </span>
-                        </div>
-                        {% endfor %}	
-                    </div>
-                </div>
+                
             </article>
 <!-- Modal -->
 <div class="modal fade" id="formNewsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
