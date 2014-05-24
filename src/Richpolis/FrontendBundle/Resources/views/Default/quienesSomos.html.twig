@@ -26,13 +26,7 @@
 					{% endfor %}
 				</ul>
 				</div>
-				<div id="anuncios">
-					<ul class="anuncios">
-						{% for anuncio in anuncios %}
-							<li>{{ anuncio.contenido | raw }}</li>
-						{% endfor %}
-					</ul>
-				</div>
+
             </article>
 			
             <article class="promociones row">
@@ -93,4 +87,5 @@ $(document).on("ready",function(){
     
 </script>
 {% endblock %}
+
 
