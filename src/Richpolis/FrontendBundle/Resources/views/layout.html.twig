@@ -4,10 +4,8 @@
 
 {% set urlAbsolutaFoto = 'http://'
                              ~ app.request.server.get('SERVER_NAME')
-                             ~ asset('images/keyarts/inicio/logomenu.png') %}
+                             ~ asset('images/keyarts/logoinicio.png') %}
                              
-{% set locale = app.request.locale %}
-    
 {% set route = app.request.get('_route') %}    
                              
 {% block stylesheets %}
@@ -66,7 +64,7 @@
         <header class="encabezado {% block header_class %}{% endblock %}">
             <nav class="main-nav">
                 <figure class="logo">
-                    <img src="{{asset('images/keyarts/inicio/logomenu.png')}}" alt="">
+                    <img src="{{ urlAbsolutaFoto }}" alt="">
                 </figure>
                 <ul class="menu">
                     <li>
@@ -110,14 +108,11 @@
         <section>
             {% block contenido %} 
             {% endblock %}
-            <div class="modal fade" id="formMensajeSitio" tabindex="-1" role="dialog" aria-labelledby="myMensajeSitio" aria-hidden="true">
-                <div class="modal-dialog">
-                     {{ render(controller("FrontendBundle:Default:getMensajeSitio",{'_locale': locale })) }}
-                </div>    
-            </div>
         </section>
         <footer>
-            <p class="col-lg-12">Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999</p>
+            <p class="col-lg-12">
+                Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999
+            </p>
         </footer>
         <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
         <div class="loader"></div>
