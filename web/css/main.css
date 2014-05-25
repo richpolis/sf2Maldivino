@@ -13,79 +13,12 @@ body {
   padding: 0;
   margin-bottom: 10px;
 }
-.container h2,
-.container h3,
-.container h4 {
-  font-family: 'antipastoregular';
-}
-.container header.encabezado {
-  background: url("../images/keyarts/menu/backmenu3.png") no-repeat;
-}
-.container header.encabezado.inicio {
-  -webkit-animation: autobusesInicio 40s ease-in infinite;
-  -moz-animation: autobusesInicio 40s ease-in infinite;
-  -ms-animation: autobusesInicio 40s ease-in infinite;
-  -o-animation: autobusesInicio 40s ease-in infinite;
-  animation: autobusesInicio 40s ease-in infinite;
-}
-.container header.encabezado #lenguajes-redes-sociales {
-  width: 100%;
-  height: 38px;
-  position: relative;
-  overflow: hidden;
-}
-.container header.encabezado #lenguajes-redes-sociales .lenguajes {
-  position: absolute;
-  top: 5px;
-  right: 200px;
-  color: #00f;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales {
-  float: right;
-  height: 38px;
-  width: 192px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span {
-  background: url("../images/keyarts/inicio/socialmedia.png") no-repeat;
-  float: left;
-  vertical-align: top;
-  width: 48px;
-  height: 38px;
-  -webkit-transition: background-image 0.5s ease;
-  -moz-transition: background-image 0.5s ease;
-  -ms-transition: background-image 0.5s ease;
-  -o-transition: background-image 0.5s ease;
-  transition: background-image 0.5s ease;
-  cursor: pointer;
-  margin: 0;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.twitter {
-  background-position: 0px 0px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.twitter:hover {
-  background-position: 0px -39px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.facebook {
-  background-position: -47px 0px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.facebook:hover {
-  background-position: -47px -39px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.youtube {
-  background-position: -94px 0px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.youtube:hover {
-  background-position: -94px -39px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email {
-  background-position: -141px 0px;
-}
-.container header.encabezado #lenguajes-redes-sociales .redes-sociales span.email:hover {
-  background-position: -141px -39px;
+.container header.encabezado .logo {
+  text-align: center;
 }
 .container header.encabezado nav {
   width: 100%;
-  height: 70px;
+  height: 50px;
   background-color: #fff;
   overflow: hidden;
   -webkit-box-sizing: border-box;
@@ -93,252 +26,34 @@ body {
   box-sizing: border-box;
   position: relative;
 }
-.container header.encabezado nav figure.logo {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-.container header.encabezado nav ul {
-  float: right;
-  width: 78%;
+.container header.encabezado nav ul.menu {
+  text-align: center;
   padding: 0;
   margin: 0;
-  height: 70px;
-  margin-top: -1px;
-  z-index: -1;
+  height: 50px;
 }
-.container header.encabezado div.container-extra-header {
-  height: 420px;
-  position: relative;
-  overflow: hidden;
+.container header.encabezado nav ul.menu li {
+  border-bottom: 1px solid #808080;
+  border-right: 1px solid #808080;
+  list-style: none;
 }
-.container header.encabezado div.container-extra-header .autobuses {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  z-index: 1000;
-}
-.container header.encabezado div.container-extra-header .escudo {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2000;
-}
-.container header.encabezado div.container-extra-header .slogan {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  z-index: 2000;
+.container header.encabezado nav ul.menu li a {
+  color: #808080;
+  display: block;
+  padding: 5px 10px;
 }
 .container > footer {
-  height: 77px;
+  height: 50px;
+  background: url("../images/keyarts/fondofooter.png") repeat-y;
 }
 .container > footer p {
   height: 50px;
   line-height: 50px;
-  background-color: #e5e6e7;
-  color: #738695;
+  color: #fff;
 }
 .container .cotizador-promociones {
   margin: 10px 0px;
   overflow: hidden;
-}
-.container .cotizador-promociones .cotizador-linea,
-.container .cotizador-promociones .newsletter {
-  background-color: #0b508c;
-  color: #fff;
-  height: 44px;
-  line-height: 44px;
-  font-size: 24px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.container .cotizador-promociones .cotizador-linea {
-  width: 40%;
-  float: left;
-  cursor: pointer;
-}
-.container .cotizador-promociones .newsletter {
-  width: 59%;
-  position: relative;
-  z-index: 1000;
-  float: right;
-  padding-right: 147px;
-}
-.container .cotizador-promociones .newsletter span.newsletter-correo {
-  display: block;
-  background: url("../images/keyarts/inicio/mailicon.png") no-repeat #002543 center center;
-  height: 44px;
-  width: 147px;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  z-index: 2000;
-  cursor: pointer;
-}
-.container .destinos-eventos {
-  margin: 10px 0px;
-  overflow: hidden;
-}
-.container .destinos-eventos .titulo {
-  background-color: rgba(11,80,140,0.6);
-  color: #fff;
-  height: 44px;
-  line-height: 44px;
-  font-size: 24px;
-  position: absolute;
-  text-transform: lowercase;
-  top: 0px;
-  left: 0px;
-  z-index: 2000;
-  padding: 0px 20px;
-  min-width: 200px;
-  text-shadow: 1px 0px #000;
-}
-.container .destinos-eventos .titulo:first-letter {
-  text-transform: uppercase;
-}
-.container .destinos-eventos .destinos,
-.container .destinos-eventos .eventos {
-  overflow: hidden;
-  position: relative;
-  heigth: 254px;
-  width: 49%;
-}
-.container .destinos-eventos .destinos ul,
-.container .destinos-eventos .eventos ul {
-  margin: 0;
-  padding: 0;
-}
-.container .destinos-eventos .destinos ul li div.bx-caption,
-.container .destinos-eventos .eventos ul li div.bx-caption {
-  width: 80%;
-}
-.container .destinos-eventos .destinos ul li div.bx-caption span,
-.container .destinos-eventos .eventos ul li div.bx-caption span {
-  background-color: rgba(11,80,140,0.6);
-  text-align: left;
-  color: #fff;
-  text-transform: uppercase;
-}
-.container .destinos-eventos .destinos {
-  float: left;
-}
-.container .destinos-eventos .eventos {
-  float: right;
-}
-.container .twitters {
-  margin: 10px 0px;
-  overflow: hidden;
-}
-.container .twitters ul.twitter-feed {
-  float: left;
-  width: 69%;
-  height: 210px;
-  margin: 0;
-  padding: 0;
-}
-.container .twitters ul.twitter-feed li.twit {
-  float: left;
-  position: relative;
-  height: 70px;
-  width: 100%;
-  border-bottom: 1px solid #808080;
-  margin-bottom: 10px;
-  list-style: none;
-}
-.container .twitters ul.twitter-feed li.twit .logo-twit {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 60px;
-  height: 60px;
-}
-.container .twitters ul.twitter-feed li.twit .logo-twit img {
-  width: 100%;
-}
-.container .twitters ul.twitter-feed li.twit .titulo-twit {
-  font-size: 12px;
-  color: #012d51;
-  position: absolute;
-  top: 0px;
-  left: 65px;
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
-}
-.container .twitters ul.twitter-feed li.twit p {
-  position: absolute;
-  top: 17px;
-  left: 65px;
-  font-size: 14px;
-  text-align: left;
-}
-.container .twitters ul.twitter-feed li.twit span.time-twit {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  font-size: 14px;
-}
-.container .twitters ul.twitter-feed li.twit span.time-twit i {
-  color: #012d51;
-  margin-right: 3px;
-}
-.container .twitters .experiencias {
-  background-color: #012d51;
-  float: right;
-  width: 29%;
-}
-.container .twitters .experiencias .titulo-experiencias {
-  font-size: 30px;
-  height: 44px;
-  line-height: 30px;
-  color: #fff;
-  font-weight: 100;
-  border-bottom: 1px solid #02579d;
-  display: block;
-  padding-top: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.container .twitters .experiencias .contenedor-experiencias {
-  position: relative;
-  height: 231px;
-}
-.container .twitters .experiencias .experiencia {
-  height: 231px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  display: none;
-}
-.container .twitters .experiencias .experiencia.active {
-  display: block;
-}
-.container .twitters .experiencias .experiencia .contenido-experiencia {
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  font-style: italic;
-  font-size: 16px;
-}
-.container .twitters .experiencias .experiencia .contenido-experiencia:before {
-  content: '" ';
-}
-.container .twitters .experiencias .experiencia .contenido-experiencia:after {
-  content: ' "';
-}
-.container .twitters .experiencias .experiencia .autor-experiencia {
-  text-align: center;
-  color: #fff;
-  padding: 10px;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 100%;
-  font-size: 12px;
 }
 .container .nosotros {
   margin: 10px 0px;
@@ -715,19 +430,15 @@ body {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -736,19 +447,15 @@ body {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -757,40 +464,15 @@ body {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
-  100% {
-    background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
-  }
-}
-@-ms-keyframes autobusesInicio {
-  0% {
-    background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
-  }
-
-  25% {
-    background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
-  }
-
-  50% {
-    background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
-  }
-
-  75% {
-    background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
-  }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
@@ -799,19 +481,15 @@ body {
   0% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
-
   25% {
     background: url("http://placehold.it/1025x537&text=Cougar") no-repeat top center;
   }
-
   50% {
     background: url("http://placehold.it/1025x537&text=Tigre") no-repeat top center;
   }
-
   75% {
     background: url("http://placehold.it/1025x537&text=Oso") no-repeat top center;
   }
-
   100% {
     background: url("../images/keyarts/backautobuses2.png") no-repeat top center;
   }
