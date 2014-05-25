@@ -1,0 +1,54 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent()  }}
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+{% endblock %}
+
+{% block menu_categorias %}
+<ul class="categorias">
+	{% for categoria in range(1,10) %}
+		<li class="categoria"><a href="#categoria{{categoria}}">Categoria {{categoria}}</a></li>
+	{% endfor %}
+</ul>
+{% endblock %}
+{% block contenido %}
+	<article class="productos">
+		<h2>productos</h2>
+		<ul class="productos">
+			{% for producto in range(1,10) %}
+				<li class="producto">
+					<figure class="logo">
+						<img src="http://placehold.it/200x330&text=botella{{producto}}" alt="">
+					</figure>
+					<h2 class="titulo">Descripcion botella {{producto}}</h2>
+					<span class="precio">${{producto * random(5)}}</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</article>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $("a.fancybox").fancybox();
+                
+        $("a.fancybox-media").fancybox({
+            helpers : {
+                media: true
+            },
+            youtube : {
+                autoplay: 0
+            }
+        });
+                
+        $.iniciarCircle();
+    });
+
+</script>
+{% endblock %}
+

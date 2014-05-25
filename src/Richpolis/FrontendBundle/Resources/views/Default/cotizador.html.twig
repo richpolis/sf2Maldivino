@@ -2,231 +2,86 @@
 
 {% block stylesheets %}
     {{  parent()  }}
-    <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
-    <style>
-        .dtpicker{
-            max-width:120px;
-            display:inline-block;
-        }
-    </style>
-{% endblock %}
-
-
-{% block extra_header %}
-    <div class="container-extra-header" style="height:90px;">
-    </div>
+    <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
 {% endblock %}
 
 {% block contenido %}
-
-    {% if error is not defined %}
-        {% set error=false %}
-    {% endif %}
-    {% if ok is not defined %}
-        {% set ok=false %}
-    {% endif %}
-    {% if mensaje is not defined %}
-        {% set mensaje="" %}
-    {% endif %}
-    
-    <article class="cotizador">
-        <h3>{{"Cotizador en linea"|trans}}</h3>
-        <hr>
-        {% if ok == true and error == false%}    
-            <div class="form-response-output form-mail-sent-ok" style="color: green;">
-                {{mensaje}}
-            </div>
-        {% elseif ok == false and error == true %}
-            <div class="form-response-output form-mail-sent-ng form-validation-errors" style="color: red;">
-                {{mensaje}}{{form_errors(form)}}
-            </div>    
-        {% else %}
-            <div class="form-response-output">
-                {{mensaje}}
-            </div>    
-        {% endif %} 
-        <form action="{{path('frontend_cotizador')}}" class="form-horizontal" role="form"  method="post" >
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"nombre"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.name, {'attr': {'class': 'form-control','placeholder':'nombre'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.name) }}
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"teléfono"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control','placeholder':'teléfono'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.telefono) }}
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"email"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.email, {'attr': {'class': 'form-control','placeholder':'email'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.email) }}
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"pais"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.pais, {'attr': {'class': 'form-control','placeholder':'pais'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.pais) }}
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"ciudad"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.ciudad, {'attr': {'class': 'form-control','placeholder':'ciudad'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.ciudad) }}
-                    </span>
-                </div>
-            </div>        
-            <fieldset>
-                <legend>{{"Origen"|trans}}</legend>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"origen"|trans}}</label>
-                    <div class="col-lg-8">
-                        {{ form_widget(form.salida, {'attr': {'class': 'form-control','placeholder':'origen'|trans }}) }}
-                        <span class="errores"> 
-                            {{ form_errors(form.salida) }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
-                    <div class="fecha-salida input-append col-lg-4">
-                        {{ form_widget(form.fechaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
-                        <span class="add-on">
-                            <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
-                        </span>
-                        <span class="errores"> 
-                            {{ form_errors(form.fechaSalida) }}
-                        </span>
-                    </div>
-                </div>        
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
-                    <div class="hora-salida input-append col-lg-4">
-                        {{ form_widget(form.horaSalida, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
-                        <span class="add-on">
-                            <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
-                        </span>
-                        <span class="errores"> 
-                            {{ form_errors(form.horaSalida) }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"destino"|trans}}</label>
-                    <div class="col-lg-8">
-                        {{ form_widget(form.destino, {'attr': {'class': 'form-control','placeholder':'destino'|trans }}) }}
-                        <span class="errores"> 
-                            {{ form_errors(form.destino) }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"no. de pasajeros"|trans}}</label>
-                    <div class="col-lg-8">
-                        {{ form_widget(form.pasajeros, {'attr': {'class': 'form-control','placeholder':'no. de pasajeros'|trans }}) }}
-                        <span class="errores"> 
-                            {{ form_errors(form.pasajeros) }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"tipo unidad"|trans}}</label>
-                    <div class="col-lg-8">
-                        {{ form_widget(form.autobus, {'attr': {'class': 'form-control','placeholder':'tipo unidad'|trans }}) }}
-                        <span class="errores"> 
-                            {{ form_errors(form.autobus) }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">{{"itinerario"|trans}}</label>
-                    <div class="col-lg-8">
-                        {{ form_widget(form.itinerario, {'attr': {'class': 'form-control','placeholder':'itinerario'|trans }}) }}
-                        <span class="errores"> 
-                            {{ form_errors(form.itinerario) }}
-                        </span>
-                    </div>
-                </div>
-
-            </fieldset>
-            <fieldset>
-                <legend>{{"Regreso"|trans}}</legend>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">{{"fecha"|trans}}</label>
-                            <div class="fecha-salida input-append col-lg-4">
-                                {{ form_widget(form.fechaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'fecha'|trans ,'data-format': "yyyy-MM-dd"}}) }}
-                                <span class="add-on">
-                                    <i data-time-icon="fa fa-time" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
-                                </span>
-                                <span class="errores"> 
-                                    {{ form_errors(form.fechaRegreso) }}
-                                </span>
-                            </div>
-                        </div>        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">{{"hora"|trans}}</label>
-                            <div class="hora-salida input-append col-lg-4">
-                                {{ form_widget(form.horaRegreso, {'attr': {'class': 'form-control dtpicker','placeholder':'hora'|trans ,'data-format': "hh:mm:ss"}}) }}
-                                <span class="add-on">
-                                    <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar" class="btn btn-info"></i>
-                                </span>
-                                <span class="errores"> 
-                                    {{ form_errors(form.horaRegreso) }}
-                                </span>
-                            </div>
-                        </div>
-            </fieldset>
-            <hr/>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">{{"comentarios / necesidades especiales"|trans}}</label>
-                <div class="col-lg-8">
-                    {{ form_widget(form.comentarios, {'attr': {'class': 'form-control','placeholder':'comentarios'|trans }}) }}
-                    <span class="errores"> 
-                        {{ form_errors(form.comentarios) }}
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-info" style="padding: 5px 40px; float: right; margin-right: 200px; font-size: 18px;" value="{{"Enviar"|trans}}"/>
-            </div>
-               
-            {{ form_rest(form) }} 
-        </form>    
-    </article>
+	<article class="buscardor">
+		<div class="buscador">
+			<div class="titulo">
+				<h2>busque el producto deseado: </h2>
+			</div>
+			<div class="formulario">
+				<input type="text" class="buscador">
+			</div>
+		</div>
+	</article>
+	<article class="productosList">
+	    <tabla class="productosList">
+		    <thead>
+		    <tr class="encabezadoItem">
+			   <th>Imagen</th>
+			   <th>Nombre</th>
+			   <th>Precio</th>
+			</tr>
+			</thead>
+			<tbody>
+				{% for producto as range(1,20) %}
+					<tr class="productoItem">
+						<td>
+							<img src="http://placehold.it/200x330&text={{servicio}}" alt="" style="width: max-height: 120px;"/>
+						</td>
+						<td>Producto {{producto}}</td>
+						<td>${{producto*random(7)|number_format(2,'.',',')}}</td>
+					</tr>	
+				{% endfor %}
+		    </tbody>
+		</table>
+	</article>
+	<article class="cotizador">
+		<h3 class="comentario">doble click el producto para agregar</h3>
+		<form action="{{path('frontend_cotizador')}}" id="formCotizador">
+			<table class="formulario">
+				<tbody class="cuerpoFormulario">
+					<tr class="productoItemSel">
+						<td>
+							<input type="hidden" name="cotizador_">
+							<input type="text">
+						</td>
+						<td>
+							<input type="text" class="productoItemCantidad">
+							<button class="productoItemCantidadUp">+</button>
+							<button class="productoItemCantidadDown">-</button>
+						</td>
+						<td>
+							$ precio
+						</td>
+					</tr>
+				</tbody>	
+			</table>
+		</form>
+	</article>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
 <script>
-$(function() {
-    $('.fecha-salida, .fecha-regreso').datetimepicker({
-        pickTime: false
+    $(document).ready(function() {
+        $("a.fancybox").fancybox();
+                
+        $("a.fancybox-media").fancybox({
+            helpers : {
+                media: true
+            },
+            youtube : {
+                autoplay: 0
+            }
+        });
+                
+        $.iniciarCircle();
     });
-    $('.hora-salida, .hora-regreso').datetimepicker({
-        pickDate: false
-    });
-    
-    $(".form-response-output").fadeIn("fast");
-    setInterval(function(){
-        $(".form-response-output").fadeOut("slow");
-    },3000);
-    
-});
+
 </script>
 {% endblock %}

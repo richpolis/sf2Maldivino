@@ -16,22 +16,12 @@
 {% endblock %}
 
 {% block contenido %}
-        <article class="slidePrincipal">
-            <div class="galeria">
-                <ul class="lista">
-                    {% for galeria in range(1,5) %}
-                        <li class="item"><img src="http://placehold.it/642x335&text={{galeria}}" alt="texto {{galeria}}"></li>
-                    {% endfor %}
-                </ul>
-				<span id="slider-prev"></span>
-                <span id="slider-next"></span>
-            </div>
-        </article>
-	<article class="quienessomos">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni similique amet sunt quas distinctio sint expedita cumque voluptatibus cum ipsa ipsum recusandae inventore aliquid velit esse consequatur facere harum cupiditate.</p>
+   <article class="maldivinoExpress">
 		<figure class="logo">
 			<img src="{{asset('images/keyarts/logoquienessomos.png')}}" alt="">
-		</figure>
+		</figure>   
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni similique amet sunt quas distinctio sint expedita cumque voluptatibus cum ipsa ipsum recusandae inventore aliquid velit esse consequatur facere harum cupiditate.</p>
+
 	</article>                               
                                 
 {% endblock %}
@@ -73,5 +63,3 @@ $(document).on("ready",function(){
     
 </script>
 {% endblock %}
-
-

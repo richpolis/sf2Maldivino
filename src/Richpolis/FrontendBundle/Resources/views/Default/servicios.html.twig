@@ -22,67 +22,20 @@
 
 {% block contenido %}
         <article class="servicios">
-            <div class="galeria">
-                <ul class="galeriaContenedor">
-                    {% if servicios is null %}
-                        {% for galeria in range(1,7) %}
-                        <li><a href="#"><img src="http://placehold.it/310x197&text=Galeria{{galeria}}" alt=""></a></li>
-                        {% endfor %}
-                    {%else %}
-                        {% for galeria in servicios.galerias %}
-                        <li>
-                            {% if galeria.isImagen == true %}
-                            <a href="{{galeria.webPath}}" class="fancybox image-wrap" >
-                                <img src="{{galeria.webPath  | apply_filter('publicaciones')}}" alt="{{galeria.titulo}}">
-                            {% else %}
-                            <a href="{{galeria.archivo}}" class="fancybox-media iframe video-wrap">
-                                <img src="{{galeria.thumbnailWebPath}}" alt="{{galeria.titulo}}">
-                            {% endif %}   
-                            <span class="lupa"></span>   
-                            </a>
-                        </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-                <span id="slider-prev"></span>
-                <span id="slider-next"></span>
-            </div>
-            {% if servicios is null %}    
-            <h3>Tipo de logistica</h3>
-            <div class="logistica">
-                <h4>Viaje Sencillo:</h4>
-                <p>Transporte desde el punto de origen al destino final del viaje.</p>
-            </div>            
-            <div class="logistica">
-                <h4>Viaje Redondo:</h4>
-                <p>Transporte de ida y vuelta desde el mismo lugar de origen.</p>
-            </div>
-            <div class="logistica">
-                <h4>Viaje Completo:</h4>
-                <p>Transporte de ida y vuelta, mas la compañia del autobús durante el viaje para la movilidad en el destino.</p>
-            </div>
-            <div class="logistica">
-                <h4>Por hora o por día:</h4>
-                <p>Renta de autobús por un pediodo de tiempo específico.</p>
-            </div>
-            <h3>Motivo del viaje</h3>
-            <ul>
-                <li>Circuitos Turísticos</li>
-                <li>Congresos y convenciones</li>
-                <li>Eventos Sociales</li>
-                <li>Planeación de Viajes</li>
-                <li>Transportación Empresarial</li>
-                <li>Translados</li>
-                <li>Viajes familiares y recreativos</li>
-                <li>Viajes Escolares</li>
-                <li>Viajes Receptivos (Nacionales y Extranjeros)</li>
-            </ul>
-            <img src="{{asset('images/keyarts/servicios/servicios.jpg')}}" alt="Turismo Plus MG"/>
-            {% else %}
-                {{ servicios.contenido(locale)|raw }}
-                <img src="{{servicios.webPath}}" alt="Turismo Plus MG"/>
-            {% endif %}    
-            
+            <h2>nuestros servicios</h2>
+			<ul class="servicios">
+			    {% for servicio in range(1,6) %}
+				<li class="servicio">
+					<figure class="logo-servicio">
+						<img src="http://placehold.it/200x200&text={{servicio}}" alt="">
+					</figure>
+					<div class="contenido-servicio">
+						<h3>Titulo del servicio {{servicio}}</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde aut sunt accusamus ad neque blanditiis eaque dolore necessitatibus ipsa id. Eos doloremque iure maiores ratione repellat facere atque dolores non?</p>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
         </article>
 {% endblock %}
 {% block javascripts %}

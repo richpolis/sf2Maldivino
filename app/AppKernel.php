@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
 
-            
+            new Richpolis\ShoppingCartBundle\RichpolisShoppingCartBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
