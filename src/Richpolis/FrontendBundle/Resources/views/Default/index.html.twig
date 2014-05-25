@@ -4,95 +4,83 @@
     {{  parent()  }}
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
     <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
-    <style>
-        .bx-wrapper .bx-viewport{
-            padding: 0px;
-            border: none;
-            top: 0px;
-            left: 0px;
-        }
-
-    </style>
 {% endblock %}
 
-{% block header_class 'inicio' %}
-
-    {% block contenido %}
-        <article class="slidePrincipal">
-            <div class="galeria">
-                <ul class="lista">
-                    {% for galeria in range(1,5) %}
-                        <li class="item"><img src="http://placehold.it/642x335&text={{galeria}}" alt="texto {{galeria}}"></li>
+{% block contenido %}
+    <article class="slidePrincipal">
+        <div class="galeria">
+            <ul class="lista">
+                {% for galeria in range(1,5) %}
+                    <li class="item"><img src="http://placehold.it/642x335&text={{galeria}}" alt="texto {{galeria}}"></li>
+                {% endfor %}
+            </ul>
+            <span id="slider-prev"></span>
+            <span id="slider-next"></span>
+        </div>
+        <div id="anuncios slide">
+            <ul class="anuncios">
+                {% for anuncio in range(1,5) %}
+                    <li class="anuncio item">Anuncio numero {{ anuncio }}</li>
                     {% endfor %}
-                </ul>
-				<span id="slider-prev"></span>
-                <span id="slider-next"></span>
-            </div>
-            <div id="anuncios">
-                <ul class="anuncios">
-                    {% for anuncio in range(1,5) %}
-                        <li class="anuncio">Anuncio numero {{ anuncio }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </article>
+            </ul>
+        </div>
+    </article>
 
-        <article class="promociones row">
-            {% for promocion in range(1,6) %}
-                <div class="promocion col-lg-6">
-                    <figure class="logo">
-                        <img src="http://placehold.it/401x213&text={{promocion}}" alt="">
-                    </figure>
-                    <div class="descripcion">
-                        Promocion de tal precio ${{promocion*random('1,2,3,4,5,6')}}
-                    </div>
+    <article class="promociones row">
+        {% for promocion in range(1,6) %}
+            <div class="promocion col-lg-6">
+                <figure class="logo">
+                    <img src="http://placehold.it/401x213&text={{promocion}}" alt="">
+                </figure>
+                <div class="descripcion">
+                    Promocion de tal precio ${{promocion*random('1,2,3,4,5,6')}}
                 </div>
-            {% endfor %}
-        </article>
+            </div>
+        {% endfor %}
+    </article>
 
 
-    {% endblock %}
-    {% block javascripts %}
-        {{ parent() }}
-        <script src="{{asset('js/jquery.bxslider.js')}}"></script>
-        <script src="{{asset('js/main.js')}}"></script>
-        <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
-        <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-        <script>
-            $(document).on("ready", function() {
-                setTimeout(function() {
-                    iniciarCircle();
-                }, 6000);
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset('js/jquery.bxslider.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+    <script>
+        $(document).on("ready", function() {
+            setTimeout(function() {
+                iniciarCircle();
+            }, 6000);
 
-                $('.galeriaContenedor').bxSlider({
-                    randomStart: false,
-                    pager: false,
-                    auto: true,
-                    controls: false,
-                    speed: 1000,
-                    autoHover: true,
-                });
-
-
-                $("a.fancybox").fancybox();
-
-                $("a.fancybox-media").fancybox({
-                    helpers: {
-                        media: true
-                    },
-                    youtube: {
-                        autoplay: 0
-                    }
-                });
-                iniciarlizarFormNewsletter();
-
-                $('.anuncios').carousel({
-                    interval: 5000,
-                    pause: "hover",
-                })
-
+            $('.galeria').bxSlider({
+                randomStart: false,
+                pager: true,
+                auto: true,
+                controls: true,
+                speed: 1000,
+                autoHover: true,
             });
 
-        </script>
-    {% endblock %}
+
+            $("a.fancybox").fancybox();
+
+            $("a.fancybox-media").fancybox({
+                helpers: {
+                    media: true
+                },
+                youtube: {
+                    autoplay: 0
+                }
+            });
+            
+            $('#anuncios').carousel({
+                interval: 5000,
+                pause: "hover",
+            })
+
+        });
+
+    </script>
+{% endblock %}
 
