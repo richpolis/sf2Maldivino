@@ -15,10 +15,26 @@ class PublicidadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion')
-            ->add('imagen')
-            ->add('position')
-            ->add('isActive')
+            ->add('descripcion',null,array(
+                'label'=>'Descripción',
+                'required'=>true,
+                'attr'=>array(
+                    'class'=>'cleditor tinymce form-control placeholder',
+                   'data-theme' => 'advanced',
+                    )
+                ))
+            ->add('file','file',array('label'=>'Imagen','attr'=>array(
+                'class'=>'form-control placeholder',
+                'placeholder'=>'Imagen pagina',
+                'data-bind'=>'value: imagen pagina'
+             )))
+            ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
+                'class'=>'checkbox-inline',
+                'placeholder'=>'Es activo',
+                'data-bind'=>'value: isActive'
+                )))
+            ->add('imagen','hidden')
+            ->add('position','hidden')
             ->add('vigencia')
         ;
     }

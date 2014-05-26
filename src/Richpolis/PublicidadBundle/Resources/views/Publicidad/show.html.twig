@@ -1,61 +1,3 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Publicidad</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Imagen</th>
-                <td>{{ entity.imagen }}</td>
-            </tr>
-            <tr>
-                <th>Position</th>
-                <td>{{ entity.position }}</td>
-            </tr>
-            <tr>
-                <th>Isactive</th>
-                <td>{{ entity.isActive }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Vigencia</th>
-                <td>{{ entity.vigencia|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('publicidad') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('publicidad_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-{% endblock %}
-
-
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block stylesheets%}
@@ -98,15 +40,15 @@
 
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Publicaciones</h2>
+            <h2 class="pull-left">Publicidad</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
                     <Divider>
                         <span class="divider">/</span> 
-                        <a href="{{path('publicaciones')}}" class="bread-current">Publicaciones</a>
-                        <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear {{categoria}}</a>
+                        <a href="{{path('publicidad')}}" class="bread-current">Publicidad</a>
+                        <a href="{{path('publicidad_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear publicidad</a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -123,7 +65,7 @@
                                         <div class="col-md-12">
                                             <div class="widget">
                                                 <div class="widget-head">
-                                                    <div class="pull-left">{{entity.tituloEs}}</div>
+                                                    <div class="pull-left">Registro {{entity.id}}</div>
                                                     <div class="clearfix"></div>
                                                 </div>
 
@@ -177,10 +119,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="widget-foot">
-                                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('publicaciones')}}')">Regresar</button>
-                                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('publicaciones_edit',{id: entity.id})}}')">Editar</button>
+                                                    <button id="botonRegresar" class="btn btn-default" onclick="javascript:regresar('{{path('publicidad')}}')">Regresar</button>
+                                                    <button id="botonEditar" class="btn btn-info" onclick="javascript:editarRegistro('{{path('publicidad_edit',{id: entity.id})}}')">Editar</button>
                                                     <div style="float: left; margin-right: 3px;">
-                                                        <form id="formEliminar" action="{{ path('publicaciones_delete', { 'id': entity.id }) }}" method="post">
+                                                        <form id="formEliminar" action="{{ path('publicidad_delete', { 'id': entity.id }) }}" method="post">
                                                                 {{ form_widget(delete_form) }}
                                                                 <button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                                                         </form>

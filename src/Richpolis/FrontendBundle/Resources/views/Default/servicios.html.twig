@@ -10,14 +10,14 @@
         <article class="servicios">
             <h2>nuestros servicios</h2>
       			<ul class="servicios">
-      			    {% for servicio in range(1,6) %}
+      			    {% for servicio in servicios %}
       				<li class="servicio">
       					<figure class="logo">
-      						<img src="http://placehold.it/200x200&text={{servicio}}" alt="">
+      						<img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
       					</figure>
       					<div class="contenido">
-      						<h3>Titulo del servicio {{servicio}}</h3>
-      						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde aut sunt accusamus ad neque blanditiis eaque dolore necessitatibus ipsa id. Eos doloremque iure maiores ratione repellat facere atque dolores non?</p>
+      						<h3>{{servicio.servicio}}</h3>
+      						{{ servicio.descripcion | raw }}
       					</div>
       				</li>
       				{% endfor %}

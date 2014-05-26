@@ -199,7 +199,7 @@ class Servicio
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getNombre());
+        $this->slug = RpsStms::slugify($this->getServicio());
     }
     
     /*** uploads ***/
@@ -287,7 +287,7 @@ class Servicio
     
     protected function getUploadDir()
     {
-        return '/uploads/autobuses';
+        return '/uploads/servicios';
     }
 
     protected function getUploadRootDir()

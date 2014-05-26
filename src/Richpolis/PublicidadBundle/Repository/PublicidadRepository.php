@@ -12,5 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class PublicidadRepository extends EntityRepository
 {
-    
+     public function getMaxPosicion(){
+        $em=$this->getEntityManager();
+       
+        $query=$em->createQuery('
+            SELECT MAX(c.position) as value 
+            FROM PublicidadBundle:Publicidad c 
+            ORDER BY c.position ASC
+        ');
+        
+        $max=$query->getResult();
+        return $max[0]['value'];
+    }
+	public function getPublicidadActivos(){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+               SELECT e 
+               FROM PublicidadBundle:Publicidad e 
+               WHERE e.isActive = :active
+               ORDER BY e.position ASC
+        ')->setParameters(array('active'=>true));
+        return $query->getResult();
+    }
 }

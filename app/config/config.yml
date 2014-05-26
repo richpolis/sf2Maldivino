@@ -98,24 +98,23 @@ fos_rest:
 
 avalanche_imagine:
     filters:
-        publicaciones_carrusel:
+        galerias_carrusel:
             type:    thumbnail
-            options: { size: [508, 256], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        publicaciones:
+            options: { size: [642, 335], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        promociones:
             type:    thumbnail
-            options: { size: [310, 210], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+            options: { size: [401, 213], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+        servicios:
+            type:    thumbnail
+            options: { size: [200, 200], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         botellas:
             type:    thumbnail
-            options: { size: [199, 331], mode: outbound, cache_type: public, cache_expires: '2 weeks' }    
-        inicio_carrusel:
-            type:    thumbnail
-            options: { size: [1025, 537], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        galerias_noticias:
-            type:    thumbnail
-            options: { size: [500, 500], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        galerias_artistas:
-            type:    thumbnail
-            options: { size: [365, 300], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+            options: { size: [199, 331], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         galerias_productos:
             type:    thumbnail
-            options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }    
+            options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }
+
+parameters:
+    # dirección de correo electrónico
+    richpolis.emails.to_email: richpolis@gmail.com
+    richpolis.uploads: %kernel.root_dir%/../web/uploads

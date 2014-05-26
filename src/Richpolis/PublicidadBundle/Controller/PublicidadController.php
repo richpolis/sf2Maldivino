@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Richpolis\PublicidadBundle\Entity\Publicidad;
 use Richpolis\PublicidadBundle\Form\PublicidadType;
 
+use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 /**
  * Publicidad controller.
  *
@@ -29,7 +32,7 @@ class PublicidadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PublicidadBundle:Publicidad')->findAll();
+        $entities = $em->getRepository('PublicidadBundle:Publicidad')->getPublicidadActivos();
 
         return array(
             'entities' => $entities,
@@ -59,6 +62,7 @@ class PublicidadController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+			'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -76,7 +80,7 @@ class PublicidadController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        //$form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -91,11 +95,22 @@ class PublicidadController extends Controller
     public function newAction()
     {
         $entity = new Publicidad();
+		
+		$max = $this->getDoctrine()->getRepository('PublicidadBundle:Publicidad')
+                ->getMaxPosicion();
+
+        if (!is_null($max)) {
+            $entity->setPosition($max + 1);
+        } else {
+            $entity->setPosition(1);
+        }
+		
         $form   = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'errores' => RpsStms::getErrorMessages($form)
         );
     }
 
@@ -148,6 +163,7 @@ class PublicidadController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+			'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
 
@@ -165,7 +181,7 @@ class PublicidadController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        //$form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -200,6 +216,7 @@ class PublicidadController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+			'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
     /**
@@ -240,8 +257,42 @@ class PublicidadController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('publicidad_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            //->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+	
+	/**
+     * Ordenar las posiciones de los autobuses.
+     *
+     * @Route("/ordenar/registros", name="publicidad_ordenar")
+     * @Method("PATCH")
+     */
+    public function ordenarRegistrosAction(Request $request) {
+        if ($request->isXmlHttpRequest()) {
+            $registro_order = $request->query->get('registro');
+            $em = $this->getDoctrine()->getManager();
+            $result['ok'] = true;
+            foreach ($registro_order as $order => $id) {
+                $registro = $em->getRepository('PublicidadBundle:Publicidad')->find($id);
+                if ($registro->getPosition() != ($order + 1)) {
+                    try {
+                        $registro->setPosition($order + 1);
+                        $em->flush();
+                    } catch (Exception $e) {
+                        $result['mensaje'] = $e->getMessage();
+                        $result['ok'] = false;
+                    }
+                }
+            }
+
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData($result);
+            return $response;
+        } else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData(array('ok' => false));
+            return $response;
+        }
     }
 }

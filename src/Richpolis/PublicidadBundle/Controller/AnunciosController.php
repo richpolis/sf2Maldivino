@@ -7,8 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Richpolis\PublicidadBundle\Entity\Anuncios;
-use Richpolis\PublicidadBundle\Form\AnunciosType;
+use Richpolis\PublicidadBundle\Entity\Anuncio;
+use Richpolis\PublicidadBundle\Form\AnuncioType;
 use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 /**
@@ -30,7 +30,7 @@ class AnunciosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PublicidadBundle:Anuncio')->findAll();
+        $entities = $em->getRepository('PublicidadBundle:Anuncio')->getAnunciosActivos();
 
         return array(
             'entities' => $entities,
@@ -45,7 +45,7 @@ class AnunciosController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Anuncios();
+        $entity = new Anuncio();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -67,13 +67,13 @@ class AnunciosController extends Controller
     /**
     * Creates a form to create a Anuncios entity.
     *
-    * @param Anuncios $entity The entity
+    * @param Anuncio $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Anuncios $entity)
+    private function createCreateForm(Anuncio $entity)
     {
-        $form = $this->createForm(new AnunciosType(), $entity, array(
+        $form = $this->createForm(new AnuncioType(), $entity, array(
             'action' => $this->generateUrl('anuncios_create'),
             'method' => 'POST',
         ));
@@ -92,7 +92,7 @@ class AnunciosController extends Controller
      */
     public function newAction()
     {
-        $entity = new Anuncios();
+        $entity = new Anuncio();
         $em = $this->getDoctrine()->getManager();
         $max = $em->getRepository('PublicidadBundle:Anuncio')->getMaxPosicion();
         if($max == null){
@@ -163,13 +163,13 @@ class AnunciosController extends Controller
     /**
     * Creates a form to edit a Anuncios entity.
     *
-    * @param Anuncios $entity The entity
+    * @param Anuncio $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Anuncios $entity)
+    private function createEditForm(Anuncio $entity)
     {
-        $form = $this->createForm(new AnunciosType(), $entity, array(
+        $form = $this->createForm(new AnuncioType(), $entity, array(
             'action' => $this->generateUrl('anuncios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

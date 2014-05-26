@@ -86,7 +86,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Pagina</th>
-                            <th>Descripcion</th>
+                            <th>Contenido</th>
                             <th>Imagen</th>
                             <th>Actions</th>
                         </tr>
@@ -96,10 +96,10 @@
                             <tr id="registro-{{entity.id}}">
                                 <td><a href="{{ path('paginas_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                                 <td>{{ entity.pagina }}</td>
-                                <td>{{ entity.contenidoEs | striptags | slice(0,250) }}</td>
+                                <td>{{ entity.contenido | striptags | slice(0,250) }}</td>
                                 <td>
                                     {% if entity.imagen | length > 0 %}
-                                        <img src="{{ entity.webPath }}" style="max-width: 400px;"/>
+                                        <img src="{{ entity.webPath }}" style="max-width: 200px;"/>
                                     {% else %}    
                                         sin imagen
                                     {% endif %}

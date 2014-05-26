@@ -18,10 +18,11 @@
 {% block contenido %}
    <article class="maldivinoExpress">
 		<figure class="logo">
-			<img src="{{asset('images/keyarts/logoexpress.png')}}" alt="">
+			<img src="{{pagina.webPath}}" alt="">
 		</figure>   
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni similique amet sunt quas distinctio sint expedita cumque voluptatibus cum ipsa ipsum recusandae inventore aliquid velit esse consequatur facere harum cupiditate.</p>
-
+		
+		{{pagina.contenido | raw}}
+		
 	</article>                               
                                 
 {% endblock %}

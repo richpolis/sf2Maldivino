@@ -40,15 +40,15 @@
       
       <!-- Page heading -->
       <div class="page-head">
-        <h2 class="pull-left">Publicaciones</h2>
+        <h2 class="pull-left">Publicidad</h2>
         <div class="clearfix"></div>
         <!-- Breadcrumb -->
         <div class="bread-crumb">
           <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a--> 
           <Divider>
           <span class="divider">/</span> 
-          <a href="{{path('publicaciones')}}" class="bread-current">Publicaciones tipo "{{categoria}}"</a>
-          <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear {{categoria}}</a>
+          <a href="{{path('publicidad')}}" class="bread-current">Publicidad</a>
+          <a href="{{path('publicidad_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear publicidad</a>
         </div>
         
         <div class="clearfix"></div>
@@ -70,7 +70,7 @@
                 <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">Registro de {{categoria}}</div>
+                  <div class="pull-left">Registro de publicidad</div>
                   <!--div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                     <a href="#" class="wsettings"><i class="fa fa-wrench"></i></a>  
@@ -95,11 +95,11 @@
                       <tbody id="cuerpoTabla">
                       {% for entity in entities %}
                             <tr id="registro-{{entity.id}}">
-                                <td><a href="{{ path('publicaciones_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td><a href="{{ path('publicidad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                                 <td>{{ entity.descripcion | raw }}</td>
                                 <td>
                                 {% if entity.imagen | length > 0 %}
-                                    <img src="{{entity.webPath}}" style="max-width: 100px;"/>
+                                    <img src="{{entity.webPath}}" style="max-width: 200px;"/>
                                 {% else  %}
                                     sin imagen 
                                 {% endif %}
@@ -113,8 +113,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button onclick="javascript:editarRegistro('{{ path('publicaciones_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
-                                    <button onclick="javascript:editarRegistro('{{ path('publicaciones_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('publicidad_edit', { 'id': entity.id }) }}')" class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i> </button>
+                                    <button onclick="javascript:editarRegistro('{{ path('publicidad_show', { 'id': entity.id }) }}','#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
                                 </td>
                                 
                             </tr>
@@ -219,7 +219,7 @@ function sendOrderToServer() {
     $(".loader").fadeIn();
     var order = $("#cuerpoTabla").sortable('serialize');
     $.ajax({
-       url: '{{path('publicaciones_ordenar')}}?' + order,
+       url: '{{path('publicidad_ordenar')}}?' + order,
        type: 'PATCH',
        data: order,
        dataType: 'json',

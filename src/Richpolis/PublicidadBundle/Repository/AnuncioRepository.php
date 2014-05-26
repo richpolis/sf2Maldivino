@@ -24,7 +24,7 @@ class AnuncioRepository extends EntityRepository
         $max=$query->getResult();
         return $max[0]['value'];
     }
-    public function getAnuncioActivas(){
+    public function getAnunciosActivos(){
         $em=$this->getEntityManager();
         $query=$em->createQuery('
                SELECT e 

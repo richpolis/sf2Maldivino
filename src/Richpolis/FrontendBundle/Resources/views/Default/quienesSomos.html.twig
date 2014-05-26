@@ -9,6 +9,12 @@
         .bx-wrapper .bx-pager.bx-default-pager a.active {
             background: red;
         }
+		.bx-wrapper .bx-controls-direction a.bx-next{
+			right: -40px;
+		}
+		.bx-wrapper .bx-controls-direction a.bx-prev{
+			left: -50px;
+		}
     </style>
 {% endblock %}
 
@@ -16,8 +22,9 @@
         <article class="slidePrincipal">
             <div class="galeria">
                 <ul class="lista">
-                    {% for galeria in range(1,5) %}
-                        <li class="item"><img src="http://placehold.it/642x335&text={{galeria}}" alt="texto {{galeria}}"></li>
+                    {% for galeria in pagina.galerias %}
+                        <li class="item">
+						<img src="{{galeria.webPath | apply_filter('galerias_carrusel')}}" alt="{{galeria.titulo}}"></li>
                     {% endfor %}
                 </ul>
 				<span id="slider-prev"></span>
@@ -25,12 +32,9 @@
             </div>
         </article>
 	<article class="quienessomos">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni similique amet sunt quas distinctio sint expedita cumque voluptatibus cum ipsa ipsum recusandae inventore aliquid velit esse consequatur facere harum cupiditate.</p>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, eaque, a iusto ipsam ipsa voluptatem quo totam possimus molestiae accusamus nam quia asperiores voluptatum praesentium ut aliquid deleniti. Dolores, voluptatem.
-        </p>
+		{{ pagina.contenido | raw }}
 		<figure class="logo">
-			<img src="{{asset('images/keyarts/logoquienesomos.png')}}" alt="">
+			<img src="{{pagina.webPath}}" alt="">
 		</figure>
 	</article>                               
                                 

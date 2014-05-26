@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Anuncios
  *
  * @ORM\Table(name="anuncios")
- * @ORM\Entity(repositoryClass="Richpolis\PublicidadBundle\Repository\AnunciosRepository")
+ * @ORM\Entity(repositoryClass="Richpolis\PublicidadBundle\Repository\AnuncioRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Anuncio

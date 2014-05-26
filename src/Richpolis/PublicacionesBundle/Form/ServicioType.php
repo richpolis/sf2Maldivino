@@ -1,12 +1,12 @@
 <?php
 
-namespace Richpolis\FrontendBundle\Form;
+namespace Richpolis\PublicacionesBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AutobusType extends AbstractType
+class ServicioType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -18,8 +18,8 @@ class AutobusType extends AbstractType
             ->add('servicio','text',array(
                 'label'=>'Servicio','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Autobus',
-                    'data-bind'=>'value: autobus'
+                    'placeholder'=>'Servicio',
+                    'data-bind'=>'value: servicio'
                     )
                 ))
             ->add('descripcion',null,array(
@@ -52,7 +52,7 @@ class AutobusType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Richpolis\FrontendBundle\Entity\Autobus'
+            'data_class' => 'Richpolis\PublicacionesBundle\Entity\Servicio'
         ));
     }
 
@@ -61,6 +61,6 @@ class AutobusType extends AbstractType
      */
     public function getName()
     {
-        return 'richpolis_frontendbundle_autobus';
+        return 'richpolis_publicacionesbundle_servicio';
     }
 }

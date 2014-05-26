@@ -75,6 +75,11 @@ class Publicidad
      */
     private $vigencia;
 
+	
+	public function __construct(){
+		$this->isActive = true;
+		$this->vigencia = new \DateTime("+1 year");
+	}
 
     /**
      * Get id

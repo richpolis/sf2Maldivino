@@ -9,6 +9,12 @@
         .bx-wrapper .bx-pager.bx-default-pager a.active {
             background: red;
         }
+		.bx-wrapper .bx-controls-direction a.bx-next{
+			right: -40px;
+		}
+		.bx-wrapper .bx-controls-direction a.bx-prev{
+			left: -50px;
+		}
     </style>
 {% endblock %}
 
@@ -16,8 +22,9 @@
     <article class="slidePrincipal">
         <div class="galeria">
             <ul class="lista">
-                {% for galeria in range(1,5) %}
-                    <li class="item"><img src="http://placehold.it/642x335&text={{galeria}}" alt="texto {{galeria}}"></li>
+                {% for galeria in pagina.galerias %}
+                    <li class="item">
+					<img src="{{galeria.webPath | apply_filter('galerias_carrusel')}}" alt="{{galeria.titulo}}"></li>
                 {% endfor %}
             </ul>
             <span id="slider-prev"></span>
@@ -26,19 +33,19 @@
     </article>
     <article class="anuncios slide">
         <div class="carousel-inner">
-        {% for anuncio in range(1,5) %}
-            <div class="anuncio item">Anuncio numero {{ anuncio }}</div>
+        {% for anuncio in anuncios %}
+            <div class="anuncio item">{{anuncio.contenido | raw }}</div>
         {% endfor %}
         </div>
     </article>
     <article class="promociones row">
-        {% for promocion in range(1,6) %}
+        {% for promocion in promociones %}
             <div class="promocion col-lg-6">
                 <figure class="logo">
-                    <img src="http://placehold.it/401x213&text={{promocion}}" alt="">
+                    <img src="{{promocion.webPath | apply_filter('promociones')}}" alt="">
                 </figure>
                 <div class="descripcion">
-                    Promocion de tal precio ${{promocion*random('1,2,3,4,5,6')}}
+                    {{promocion.descripcion | raw }}
                 </div>
             </div>
         {% endfor %}

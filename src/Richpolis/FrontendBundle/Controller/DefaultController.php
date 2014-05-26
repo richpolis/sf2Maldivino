@@ -28,11 +28,18 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $inicio = $em->getRepository('PaginasBundle:Pagina')
-                ->findOneBy(array('pagina'=>'inicio'));
+        $portada = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'portada'));
+		
+		$promociones = $em->getRepository('PublicidadBundle:Publicidad')->getPublicidadActivos();
+		
+		$anuncios = $em->getRepository('PublicidadBundle:Anuncio')->getAnunciosActivos();
+		
         
         return array(
-            'pagina'=>$inicio,
+            'pagina'=>$portada,
+			'promociones'=>$promociones,
+			'anuncios'=>$anuncios,
         );
 		        
     }
@@ -69,10 +76,10 @@ class DefaultController extends Controller
     public function quienesSomosAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $nosotros = $em->getRepository('PaginasBundle:Pagina')
-                ->findOneBy(array('pagina'=>'nosotros'));
+        $quienesSomos = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'quienes-somos'));
         return array(
-            'nosotros'=>$nosotros
+            'pagina'=>$quienesSomos
         );
     }
     
@@ -108,7 +115,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $express = $em->getRepository('PaginasBundle:Pagina')
-                ->findOneBy(array('pagina'=>'express'));
+                ->findOneBy(array('pagina'=>'maldivino-express'));
         
         return array(
             'pagina'=>$express,
@@ -125,7 +132,7 @@ class DefaultController extends Controller
         $contacto = new Contacto();
         $form = $this->createForm(new ContactoType(), $contacto);
         $request = $this->getRequest();
-        
+        $em = $this->getDoctrine()->getManager();
         if ($request->getMethod() == 'POST') {
             
             $form->handleRequest($request);
@@ -133,7 +140,6 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $datos=$form->getData();
                 
-                $em = $this->getDoctrine()->getManager();
                 $configuracion = $em->getRepository('BackendBundle:Configuraciones')
                                 ->findOneBy(array('slug'=>'email-contacto'));
                 
@@ -173,11 +179,20 @@ class DefaultController extends Controller
             ));
         }
         
+		
+        
+        $ubicacion = $em->getRepository('PaginasBundle:Pagina')
+                ->findOneBy(array('pagina'=>'ubicacion'));
+		$mapa = $em->getRepository('BackendBundle:Configuraciones')
+                                ->findOneBy(array('slug'=>'mapa-ubicacion'));
+		
         return $this->render('FrontendBundle:Default:contacto.html.twig',array(
               'form' => $form->createView(),
               'ok'=>$ok,
               'error'=>$error,
               'mensaje'=>$mensaje,
+			  'pagina'=>$ubicacion,
+			  'mapa'=>$mapa,
         ));
     }
 
