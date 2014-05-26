@@ -4,6 +4,12 @@
     {{  parent()  }}
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
     <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
+    <style>
+        .bx-wrapper .bx-pager.bx-default-pager a:hover,
+        .bx-wrapper .bx-pager.bx-default-pager a.active {
+            background: red;
+        }
+    </style>
 {% endblock %}
 
 {% block contenido %}
@@ -17,15 +23,14 @@
             <span id="slider-prev"></span>
             <span id="slider-next"></span>
         </div>
-        <div id="anuncios slide">
-            <ul class="anuncios">
-                {% for anuncio in range(1,5) %}
-                    <li class="anuncio item">Anuncio numero {{ anuncio }}</li>
-                    {% endfor %}
-            </ul>
+    </article>
+    <article class="anuncios slide">
+        <div class="carousel-inner">
+        {% for anuncio in range(1,5) %}
+            <div class="anuncio item">Anuncio numero {{ anuncio }}</div>
+        {% endfor %}
         </div>
     </article>
-
     <article class="promociones row">
         {% for promocion in range(1,6) %}
             <div class="promocion col-lg-6">
@@ -50,13 +55,14 @@
     <script>
         $(document).on("ready", function() {
 
-            $('.galeria').bxSlider({
+            $('.lista').bxSlider({
                 randomStart: false,
                 pager: true,
                 auto: true,
                 controls: true,
                 speed: 1000,
                 autoHover: true,
+                slideWidth: 642,
             });
 
 
@@ -70,12 +76,8 @@
                     autoplay: 0
                 }
             });
-            
-            $('#anuncios').carousel({
-                interval: 5000,
-                pause: "hover",
-            })
 
+            $('.anuncios').carousel();
         });
 
     </script>

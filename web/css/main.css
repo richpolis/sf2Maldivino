@@ -4,7 +4,7 @@ a:hover {
 body {
   font-size: 16px;
   background-color: #fff;
-  font-family: 'antipastoregular';
+  font-family: 'bebas_neueregular';
 }
 .container {
   margin: 0 auto;
@@ -20,11 +20,12 @@ body {
   width: 100%;
   height: 50px;
   background-color: #fff;
-  overflow: hidden;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  position: relative;
+  margin-top: 10px;
+  border-bottom: 2px solid #808080;
+  border-top: 2px solid #808080;
 }
 .container header.encabezado nav ul.menu {
   text-align: center;
@@ -33,32 +34,193 @@ body {
   height: 50px;
 }
 .container header.encabezado nav ul.menu li {
-  border-bottom: 1px solid grey;
-  border-right: 1px solid grey;
   list-style: none;
+  height: 50px;
+  line-height: 50px;
+  width: 13%;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: -2px;
+  border-right: 1px solid #808080;
 }
 .container header.encabezado nav ul.menu li a {
   color: #808080;
   display: block;
-  padding: 5px 10px;
-  height: 50px;
-  line-height: 50px;
+  font-size: 22px;
+}
+.container header.encabezado nav ul.menu li.active,
+.container header.encabezado nav ul.menu li:hover {
+  border-bottom: 2px solid #f00;
+}
+.container header.encabezado nav ul.menu li.active a,
+.container header.encabezado nav ul.menu li:hover a {
+  color: #f00;
+}
+.container header.encabezado nav ul.menu li.maldivino-express {
+  width: 15%;
+}
+.container header.encabezado nav ul.menu li:last-child {
+  border-right: none;
+}
+.container header.encabezado ul.categorias {
+  padding: 10px;
+  margin: 10px 0px 10px;
+  background: url("../images/keyarts/fondofooter.png") repeat-y;
+}
+.container header.encabezado ul.categorias li.categoria {
+  list-style: none;
+  padding: 5px;
+  width: 10%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border: 1px solid #f00;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.container header.encabezado ul.categorias li.categoria a {
+  color: #fff;
+}
+.container header.encabezado ul.categorias li.categoria.active,
+.container header.encabezado ul.categorias li.categoria:hover {
+  border: 1px solid #fff;
 }
 .container > footer {
   height: 50px;
-  background: url("images/keyarts/fondofooter.png") repeat-y;
+  background: url("../images/keyarts/fondofooter.png") repeat-y;
 }
 .container > footer p {
   height: 50px;
   line-height: 50px;
   color: #fff;
 }
-
-.container nav{
-    margin-bottom: 20px;
+.container .slidePrincipal {
+  margin: 10px 0px;
 }
-
-.slidePrincipal .galeria{
-    width: 630px;
-    margin: 0 auto;
+.container article.anuncios {
+  margin: 10px 5px;
+  height: 50px;
+  width: 100%;
+}
+.container article.anuncios #anuncios {
+  height: 50px;
+  text-align: center;
+}
+.container article.promociones {
+  margin: 10px 5px;
+}
+.container article.promociones .promocion {
+  margin: 10px 0px;
+}
+.container article.promociones img {
+  border: 5px solid #fff;
+  -webkit-box-shadow: 0 0 3px 1px #bdbdbd;
+  -moz-box-shadow: 0 0 3px 1px #bdbdbd;
+  -ms-box-shadow: 0 0 3px 1px #bdbdbd;
+  -o-box-shadow: 0 0 3px 1px #bdbdbd;
+  box-shadow: 0 0 3px 1px #bdbdbd;
+}
+.container article.promociones .descripcion {
+  font-size: 24px;
+  margin-top: 5px;
+  color: #808080;
+}
+.container article.quienessomos {
+  margin: 10px 0px;
+}
+.container article.quienessomos p {
+  font-family: 'futura_lt_btlight';
+}
+.container article.servicios {
+  margin: 10px 0px;
+}
+.container article.servicios h2 {
+  font-family: 'bebas_neueregular';
+  color: #808080;
+  text-align: left;
+  padding-left: 10px;
+}
+.container article.servicios ul.servicios {
+  padding: 0;
+  margin: 0;
+}
+.container article.servicios ul.servicios li.servicio {
+  width: 100%;
+  text-align: left;
+  overflow: hidden;
+  margin-top: 10px;
+  list-style: none;
+}
+.container article.servicios ul.servicios li.servicio .logo {
+  float: left;
+  width: 200px;
+}
+.container article.servicios ul.servicios li.servicio .contenido {
+  float: right;
+  width: 800px;
+}
+.container article.servicios ul.servicios li.servicio .contenido h3 {
+  font-family: 'bebas_neueregular';
+  color: #f00;
+  margin-top: 0px;
+}
+.container article.servicios ul.servicios li.servicio .contenido p {
+  font-family: 'futura_lt_btlight';
+}
+.container article.productos {
+  margin: 10px 0px;
+}
+.container article.productos h2 {
+  font-family: 'bebas_neueregular';
+  color: #808080;
+  text-align: left;
+  padding-left: 10px;
+}
+.container article.productos ul.productos {
+  padding: 0;
+  margin: 0;
+}
+.container article.productos ul.productos li.producto {
+  list-style: none;
+  border-bottom: 1px solid transparent;
+  width: 32%;
+  display: inline-block;
+  vertical-align: top;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0px 20px;
+  margin: 0px 0px 10px;
+}
+.container article.productos ul.productos li.producto h3.titulo {
+  font-family: 'bebas_neueregular';
+  padding-left: none;
+  font-size: 22px;
+  color: #808080;
+  text-align: center;
+  margin: 5px 0px 10px;
+}
+.container article.productos ul.productos li.producto span.precio {
+  font-family: 'futura_lt_btlight';
+  color: #f00;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+}
+.container article.productos ul.productos li.producto img {
+  -webkit-box-shadow: 0 0 3px 2px #808080;
+  -moz-box-shadow: 0 0 3px 2px #808080;
+  -ms-box-shadow: 0 0 3px 2px #808080;
+  -o-box-shadow: 0 0 3px 2px #808080;
+  box-shadow: 0 0 3px 2px #808080;
+}
+.container article.maldivinoExpress {
+  margin: 10px 0px;
+}
+.container article.maldivinoExpress p {
+  font-family: 'futura_lt_btlight';
 }

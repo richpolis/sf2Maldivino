@@ -5,13 +5,10 @@
     <link rel="stylesheet" href="{{asset('css/jquery.bxslider.css')}}">
     <link rel="stylesheet" href="{{asset('css/fancybox/jquery.fancybox.css')}}"/>
     <style>
-    .bx-wrapper .bx-viewport{
-        padding: 0px;
-        border: none;
-        top: 0px;
-        left: 0px;
-    }
-    
+        .bx-wrapper .bx-pager.bx-default-pager a:hover,
+        .bx-wrapper .bx-pager.bx-default-pager a.active {
+            background: red;
+        }
     </style>
 {% endblock %}
 
@@ -29,8 +26,11 @@
         </article>
 	<article class="quienessomos">
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni similique amet sunt quas distinctio sint expedita cumque voluptatibus cum ipsa ipsum recusandae inventore aliquid velit esse consequatur facere harum cupiditate.</p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, eaque, a iusto ipsam ipsa voluptatem quo totam possimus molestiae accusamus nam quia asperiores voluptatum praesentium ut aliquid deleniti. Dolores, voluptatem.
+        </p>
 		<figure class="logo">
-			<img src="{{asset('images/keyarts/logoquienessomos.png')}}" alt="">
+			<img src="{{asset('images/keyarts/logoquienesomos.png')}}" alt="">
 		</figure>
 	</article>                               
                                 
@@ -43,14 +43,15 @@
 <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
 <script>
 $(document).on("ready",function(){
-        $('.galeriaContenedor').bxSlider({
-            randomStart: false,
-            pager: false,
-            auto: true,
-            controls: false,
-            speed: 1000,
-            autoHover: true,
-        });
+        $('.lista').bxSlider({
+                randomStart: false,
+                pager: true,
+                auto: true,
+                controls: true,
+                speed: 1000,
+                autoHover: true,
+                slideWidth: 642,
+            });
 		
                 
         $("a.fancybox").fancybox();
@@ -63,11 +64,7 @@ $(document).on("ready",function(){
                 autoplay: 0
             }
         });
-        
-        $('.anuncios').carousel({
-            interval: 5000,
-            pause: "hover",
-        })
+
 
 });
     

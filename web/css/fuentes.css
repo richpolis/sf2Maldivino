@@ -1,10 +1,22 @@
 @font-face {
-    font-family: 'antipastoregular';
-    src: url('../fonts/sitio/antipasto_regular_1-webfont.eot');
-    src: url('../fonts/sitio/antipasto_regular_1-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/sitio/antipasto_regular_1-webfont.woff') format('woff'),
-         url('../fonts/sitio/antipasto_regular_1-webfont.ttf') format('truetype'),
-         url('../fonts/sitio/antipasto_regular_1-webfont.svg#antipastoregular') format('svg');
+    font-family: 'bebas_neueregular';
+    src: url('../fonts/sitio/bebasneue/bebasneue-webfont.eot');
+    src: url('../fonts/sitio/bebasneue/bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sitio/bebasneue/bebasneue-webfont.woff') format('woff'),
+         url('../fonts/sitio/bebasneue/bebasneue-webfont.ttf') format('truetype'),
+         url('../fonts/sitio/bebasneue/bebasneue-webfont.svg#bebas_neueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'futura_lt_btlight';
+    src: url('../fonts/sitio/futural/futural-webfont.eot');
+    src: url('../fonts/sitio/futural/futural-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/sitio/futural/futural-webfont.woff') format('woff'),
+         url('../fonts/sitio/futural/futural-webfont.ttf') format('truetype'),
+         url('../fonts/sitio/futural/futural-webfont.svg#futura_lt_btlight') format('svg');
     font-weight: normal;
     font-style: normal;
 

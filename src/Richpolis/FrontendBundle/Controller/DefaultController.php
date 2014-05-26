@@ -83,7 +83,7 @@ class DefaultController extends Controller
     public function serviciosAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $autobuses = $em->getRepository('PublicacionesBundle:Servicio')
+        $servicios = $em->getRepository('PublicacionesBundle:Servicio')
                 ->findActivos();
         return array(
             'servicios'=>$servicios,

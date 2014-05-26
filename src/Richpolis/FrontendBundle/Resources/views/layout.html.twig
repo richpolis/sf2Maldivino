@@ -43,7 +43,6 @@
 <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 <link rel="stylesheet" href="{{asset('css/bootstrap-responsive.html')}}">
 <link rel="stylesheet" href="{{asset('css/fuentes.css')}}">
-<link rel="stylesheet" href="{{asset('css/menu.css')}}">
 <link rel="stylesheet" href="{{asset('css/main.css')}}">
 <style>
     .loader {
@@ -67,44 +66,44 @@
             </figure>		
             <nav class="main-nav">
                 <ul class="menu">
-                    <li>
-                        <a href="{{path('homepage')}}"  {% if route == 'homepage' %}class="active"{% endif %}>
+                    <li {% if route == 'homepage' %}class="active"{% endif %}>
+                        <a href="{{path('homepage')}}">
                             portada
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_quienes_somos')}}"  {% if route == 'frontend_quienes_somos' %}class="active"{% endif %}>
+                    <li class="maldivino-express {% if route == 'frontend_quienes_somos' %}active{% endif %}">
+                        <a href="{{path('frontend_quienes_somos')}}">
                             quienes somos
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_servicios')}}"  {% if route == 'frontend_servicios' %}class="active"{% endif %}>
+                    <li {% if route == 'frontend_servicios' %}class="active"{% endif %}>
+                        <a href="{{path('frontend_servicios')}}" >
                             servicios
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_productos')}}"  {% if route == 'frontend_productos' %}class="active"{% endif %}>
+                    <li {% if route == 'frontend_productos' %}class="active"{% endif %}>
+                        <a href="{{path('frontend_productos')}}">
                             productos
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_cotizador')}}"  {% if route == 'frontend_cotizador' %}class="active"{% endif %}>
+                    <li {% if route == 'frontend_cotizador' %}class="active"{% endif %}>
+                        <a href="{{path('frontend_cotizador')}}">
                             cotizador
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_maldivino_express')}}"  {% if route == 'frontend_maldivino_express' %}class="active"{% endif %}>
+                    <li class="maldivino-express {% if route == 'frontend_maldivino_express' %}active{% endif %}">
+                        <a href="{{path('frontend_maldivino_express')}}">
                             maldivino express
                         </a>
                     </li>
-                    <li>
-                        <a href="{{path('frontend_contacto')}}"  {% if route == 'frontend_contacto' %}class="active"{% endif %}>
+                    <li  {% if route == 'frontend_contacto' %}class="active"{% endif %}>
+                        <a href="{{path('frontend_contacto')}}">
                             ubicacion
                         </a>
                     </li>
                 </ul>
-				{% block menu_categorias %} {% endblock %}
-            </nav>
+			</nav>
+            {% block menu_categorias %} {% endblock %}
         </header>
         <section>
             {% block contenido %} 
@@ -112,7 +111,7 @@
         </section>
         <footer>
             <p class="col-lg-12">
-                Turismo Plus MG Confort Premier - Calle Reforma Manzana #3 Local #4 Col. La Bamba, Chalco Edo. de Mex. Télefono +521 55 59730999
+                MALDIVINO
             </p>
         </footer>
         <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
