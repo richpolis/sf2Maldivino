@@ -108,7 +108,7 @@ class CategoriaPublicacionController extends Controller
     /**
      * Finds and displays a CategoriaPublicacion entity.
      *
-     * @Route("/{id}", name="categorias_publicaciones_show")
+     * @Route("/{id}", name="categorias_publicaciones_show", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -133,7 +133,7 @@ class CategoriaPublicacionController extends Controller
     /**
      * Displays a form to edit an existing CategoriaPublicacion entity.
      *
-     * @Route("/{id}/edit", name="categorias_publicaciones_edit")
+     * @Route("/{id}/edit", name="categorias_publicaciones_edit", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -180,7 +180,7 @@ class CategoriaPublicacionController extends Controller
     /**
      * Edits an existing CategoriaPublicacion entity.
      *
-     * @Route("/{id}", name="categorias_publicaciones_update")
+     * @Route("/{id}", name="categorias_publicaciones_update", requirements={"id" = "\d+"})
      * @Method("PUT")
      * @Template("PublicacionesBundle:CategoriaPublicacion:edit.html.twig")
      */
@@ -215,7 +215,7 @@ class CategoriaPublicacionController extends Controller
     /**
      * Deletes a CategoriaPublicacion entity.
      *
-     * @Route("/{id}", name="categorias_publicaciones_delete")
+     * @Route("/{id}", name="categorias_publicaciones_delete", requirements={"id" = "\d+"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -260,38 +260,77 @@ class CategoriaPublicacionController extends Controller
     }
     
     /**
-     * Creates a new CategoriaPublicacion entity.
+     * Ordenar las posiciones de las categorias publicaciones.
      *
-     * @Route("/", name="categorias_publicaciones_ordenar")
-     * @Method("POST")
+     * @Route("/ordenar/registros", name="categorias_publicaciones_ordenar")
+     * @Method("PATCH")
      */
-    public function ordenarRegistrosAction()
-    {
-        $request=$this->getRequest();
+    public function ordenarRegistrosAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $registro_order = $request->query->get('registro');
-            $em=$this->getDoctrine()->getManager();
-            $result['ok']="ok";
-            foreach($registro_order as $order=>$idCategoria)
-            {
-                $registro=$em->getRepository('PublicacionesBundle:CategoriaPublicacion')->find($idCategoria);
-                if($registro->getPosition()!=($order+1)){
-                    try{
-                        $registro->setPosition($order+1);
+            $em = $this->getDoctrine()->getManager();
+            $result['ok'] = true;
+            foreach ($registro_order as $order => $id) {
+                $registro = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->find($id);
+                if ($registro->getPosition() != ($order + 1)) {
+                    try {
+                        $registro->setPosition($order + 1);
                         $em->flush();
-                    }catch(Exception $e){
-                        $result['ok']=$e->getMessage();
-                    }    
+                    } catch (Exception $e) {
+                        $result['mensaje'] = $e->getMessage();
+                        $result['ok'] = false;
+                    }
                 }
             }
-            $response = new JsonResponse();
-            $response->setData(array('ok'=>true));
+
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData($result);
+            return $response;
+        } else {
+            $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+            $response->setData(array('ok' => false));
             return $response;
         }
-        else {
-            $response = new JsonResponse();
-            $response->setData(array('ok'=>false));
+    }
+    
+    /**
+     * @Route("/exportar", name="categorias_publicaciones_exportar")
+     * @Method({"GET", "POST"})
+     */
+    public function exportarAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST') {
+            if($request->request->has('exportarTodos') && $request->request->get('exportarTodos')){
+                $entities = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')->findAll();
+            }elseif($request->request->has('inputDesde') && 
+                    $request->request->has('inputHasta')){
+                $entities = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                        ->findEntreFechas($request->request->get('inputDesde'),$request->request->get('inputHasta'));
+            }
+            $filename = "export_".date("Y_m_d").".xls"; 
+            $response=$this->render('PublicacionesBundle:CategoriaPublicacion:tablaExportar.html.twig', array('entities'=>$entities)); 
+            $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8'); 
+            $response->headers->set('Content-Disposition', 'attachment; filename='.$filename); 
+            $response->headers->set('Pragma', 'public'); 
+            $response->headers->set('Cache-Control', 'maxage=1');
             return $response;
         }
+        
+            return $this->render("PublicacionesBundle:CategoriaPublicacion:exportar.html.twig");
+    }
+    
+    /**
+     * @Route("/importar", name="categorias_publicaciones_importar")
+     * @Method({"GET", "POST"})
+     */
+    public function importarAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST') {
+            
+         
+          return $this->redirect($this->generateUrl('categorias_publicaciones'));  
+        }
+        
+        return $this->render("PublicacionesBundle:CategoriaPublicacion:importar.html.twig");
     }
 }

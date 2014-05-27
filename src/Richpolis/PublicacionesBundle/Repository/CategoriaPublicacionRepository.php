@@ -170,4 +170,19 @@ class CategoriaPublicacionRepository extends EntityRepository
         
         return $query->getQuery()->setMaxResults(1)->getOneOrNullResult();
     }
+    
+    public function findEntreFechas($desde,$hasta){
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+                    SELECT c,p 
+                    FROM PublicacionesBundle:CategoriaPublicacion c
+                    JOIN LEFT c.publicaciones p 
+                    WHERE c.createdAt BETWEEN :desde AND :hasta 
+                    ORDER BY c.nombre,p.position ASC
+                ')->setParameters(array(
+                    'desde'=>  $desde." 00:00:00",
+                    'hasta'=>  $hasta." 23:59:59",
+                ));
+        return $query->getResult();
+    }
 }

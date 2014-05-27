@@ -411,8 +411,8 @@ class PublicacionController extends Controller {
         return $response;
     }
 	
-	/**
-     * Ordenar las posiciones de los autobuses.
+    /**
+     * Ordenar las posiciones de las publicaciones.
      *
      * @Route("/ordenar/registros", name="publicaciones_ordenar")
      * @Method("PATCH")
