@@ -6,82 +6,80 @@
 {% endblock %}
 
 {% block contenido %}
-	<article class="buscardor">
-		<div class="buscador">
-			<div class="titulo">
-				<h2>busque el producto deseado: </h2>
-			</div>
-			<div class="formulario">
-				<input type="text" class="buscador">
-			</div>
-		</div>
-	</article>
-	<article class="productosList">
-	    <tabla class="productosList">
-		    <thead>
-		    <tr class="encabezadoItem">
-			   <th>Imagen</th>
-			   <th>Nombre</th>
-			   <th>Precio</th>
-			</tr>
-			</thead>
-			<tbody>
-				{% for producto as range(1,20) %}
-					<tr class="productoItem">
-						<td>
-							<img src="http://placehold.it/200x330&text={{servicio}}" alt="" style="width: max-height: 120px;"/>
-						</td>
-						<td>Producto {{producto}}</td>
-						<td>${{producto*random(7)|number_format(2,'.',',')}}</td>
-					</tr>	
-				{% endfor %}
-		    </tbody>
-		</table>
-	</article>
-	<article class="cotizador">
-		<h3 class="comentario">doble click el producto para agregar</h3>
-		<form action="{{path('frontend_cotizador')}}" id="formCotizador">
-			<table class="formulario">
-				<tbody class="cuerpoFormulario">
-					<tr class="productoItemSel">
-						<td>
-							<input type="hidden" name="cotizador_">
-							<input type="text">
-						</td>
-						<td>
-							<input type="text" class="productoItemCantidad">
-							<button class="productoItemCantidadUp">+</button>
-							<button class="productoItemCantidadDown">-</button>
-						</td>
-						<td>
-							$ precio
-						</td>
-					</tr>
-				</tbody>	
-			</table>
-		</form>
-	</article>
+    <article class="buscardor">
+        <div class="buscador">
+            <div class="titulo">
+                <h2>busque el producto deseado: </h2>
+            </div>
+            <div class="formulario">
+                <input type="text" class="buscador">
+            </div>
+        </div>
+    </article>
+    <article class="productosList">
+        <table class="productosList">
+            <thead>
+                <tr class="encabezadoItem">
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto as range(1,20) %}
+                    <tr class="productoItem">
+                        <td>
+                            <img src="http://placehold.it/200x330&text={{servicio}}" alt="" style="max-height: 120px;"/>
+                        </td>
+                        <td>Producto {{producto}}</td>
+                        <td>${{producto*random(7)|number_format(2,'.',',')}}</td>
+                    </tr>	
+                {% endfor %}
+            </tbody>
+        </table>
+    </article>
+    <article class="cotizador">
+        <h3 class="comentario">doble click el producto para agregar</h3>
+        <form action="{{path('frontend_cotizador')}}" id="formCotizador">
+            <table class="formulario">
+                <tbody class="cuerpoFormulario">
+                    <tr class="productoItemSel">
+                        <td>
+                            <input type="hidden" name="cotizador_">
+                            <input type="text">
+                        </td>
+                        <td>
+                            <input type="text" class="productoItemCantidad">
+                            <button class="productoItemCantidadUp">+</button>
+                            <button class="productoItemCantidadDown">-</button>
+                        </td>
+                        <td>
+                            $ precio
+                        </td>
+                    </tr>
+                </tbody>	
+            </table>
+        </form>
+    </article>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
-<script src="{{asset('js/main.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
-<script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        $("a.fancybox").fancybox();
-                
-        $("a.fancybox-media").fancybox({
-            helpers : {
-                media: true
-            },
-            youtube : {
-                autoplay: 0
-            }
+    {{ parent() }}
+    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
+    <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            $("a.fancybox").fancybox();
+            $("a.fancybox-media").fancybox({
+                helpers: {
+                    media: true
+                },
+                youtube: {
+                    autoplay: 0
+                }
+            });
+            $.iniciarCircle();
         });
-                
-        $.iniciarCircle();
-    });
 
-</script>
+    </script>
 {% endblock %}

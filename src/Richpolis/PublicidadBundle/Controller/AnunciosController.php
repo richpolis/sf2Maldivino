@@ -221,9 +221,10 @@ class AnunciosController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
+        //$form->submit($request->request->all());
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        
+        //if($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('PublicidadBundle:Anuncio')->find($id);
 
@@ -233,7 +234,7 @@ class AnunciosController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('anuncios'));
     }
@@ -250,13 +251,13 @@ class AnunciosController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('anuncios_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            /*->add('submit', 'submit', array(
+            ->getForm()
+        ;
+         /*->add('submit', 'submit', array(
                 'label' => 'Eliminar',
                 'attr'=>array(
                     'class'=>'btn btn-danger'
             )))*/
-            ->getForm()
-        ;
     }
 	
     /**

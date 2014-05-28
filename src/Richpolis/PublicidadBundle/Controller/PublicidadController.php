@@ -216,7 +216,7 @@ class PublicidadController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-			'errores' => RpsStms::getErrorMessages($editForm)
+	    'errores' => RpsStms::getErrorMessages($editForm)
         );
     }
     /**
@@ -230,7 +230,7 @@ class PublicidadController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('PublicidadBundle:Publicidad')->find($id);
 
@@ -240,7 +240,7 @@ class PublicidadController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('publicidad'));
     }

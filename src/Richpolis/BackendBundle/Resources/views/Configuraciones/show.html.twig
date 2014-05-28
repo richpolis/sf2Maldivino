@@ -117,9 +117,9 @@
                                                     <div style="float: left; margin-right: 3px;">
                                                         <form id="formEliminar" action="{{ path('configuraciones_delete', { 'id': entity.id }) }}" method="post">
                                                                 <input type="hidden" name="_method" value="DELETE">
-																{{ form_widget(delete_form) }}
+								{{ form_widget(delete_form) }}
                                                         </form>
-														<button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
+							<button class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                                                     </div>        
                                                 </div>
                                             </div>  

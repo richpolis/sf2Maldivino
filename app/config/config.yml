@@ -107,7 +107,7 @@ avalanche_imagine:
         servicios:
             type:    thumbnail
             options: { size: [200, 200], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
-        botellas:
+        productos:
             type:    thumbnail
             options: { size: [199, 331], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         galerias_productos:

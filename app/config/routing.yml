@@ -1,7 +1,7 @@
-#richpolis_shopping_cart:
-#    resource: "@RichpolisShoppingCartBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
+richpolis_shopping_cart:
+    resource: "@RichpolisShoppingCartBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
 
 publicidad:
     resource: "@PublicidadBundle/Controller/"

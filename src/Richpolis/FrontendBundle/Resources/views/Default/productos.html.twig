@@ -7,28 +7,39 @@
 
 {% block menu_categorias %}
 <ul class="categorias">
-	{% for categoria in range(1,10) %}
-		<li class="categoria"><a href="#categoria{{categoria}}">Categoria {{categoria}}</a></li>
+	{% for categoria in categorias %}
+		<li id="categoria-{{categoria.id}}" class="categoria {% if loop.index == 1 %} active {% endif %}"><a href="#categoria/{{categoria.slug}}">{{categoria}}</a></li>
 	{% endfor %}
 </ul>
 {% endblock %}
 {% block contenido %}
-	<article class="productos">
-		<h2>productos</h2>
+	<article class="productos"></article>
+
+{# show autobus #}
+{% raw %}
+<script type="text/template" id="productos_template">
+    <h2>productos {{categoria}}</h2>
 		<ul class="productos">
-			{% for producto in range(1,10) %}
+			{% for producto in productos %}
 				<li class="producto">
 					<figure class="logo">
-						<img src="http://placehold.it/200x330&text=botella{{producto}}" alt="">
+						<img src="{{ producto.imagen }}" alt="">
 					</figure>
-					<h3 class="titulo">Descripcion botella {{producto}}</h3>
-					<span class="precio">${{producto * random(5)}}</span>
+					<h3 class="titulo">{{ producto.nombre|raw }}</h3>
+					<span class="precio">{{ producto.precio }}</span>
 				</li>
 			{% endfor %}
 		</ul>
-	</article>
+</script>
+{% endraw %}
+
+
 {% endblock %}
-{% block javascripts %}
+
+
+
+
+{% block javascripts %} 
 {{ parent() }}
 <script src="{{asset('js/main.js')}}"></script>
 <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
@@ -45,10 +56,50 @@
                 autoplay: 0
             }
         });
-                
-        $.iniciarCircle();
     });
 
+</script>
+<script src="{{asset('bundles/frontend/js/app_productos.js')}}"></script> 
+<script>
+$(document).ready(function() {
+    window.api = {
+      url: '{{path('frontend_productos')}}',
+      cont: {{ categorias | length }},
+      accion: {
+          list: false,
+          show: false,
+          idShow: 0,
+      },
+      datos: [
+      	{% for categoria in categorias %}
+      		{
+      		'id': {{ categoria.id }},	
+      		'categoria': '{{categoria.nombre}}',
+      		'slug': '{{categoria.slug}}',
+      		'productos': [
+      				{% for publicacion in categoria.publicaciones %}
+      					{
+      					'imagen': '{% if publicacion.imagen | length > 0 %} {{ publicacion.webPath|apply_filter('productos') }}	{% else %} http://placehold.it/200x330&text={{publicacion.titulo}}	{% endif %}',
+      					'nombre': '{{ publicacion.titulo }}',
+      					'precio': '$ {{publicacion.precio | number_format }}',
+      					},
+      				{% endfor %}
+      			],	
+      		},
+      	{% endfor %}
+      ],
+    };
+    $(".loader").fadeIn();
+    window.routers.app = new Productos.Routers.App();
+    window.collections.categorias = new Productos.Collections.Categorias(window.api.datos);
+    window.collections.categorias.url=window.api.url;
+    $(".loader").fadeOut();
+    Backbone.history.start({
+        root : '/',
+        pushState:false
+    });
+        
+});
 </script>
 {% endblock %}
 

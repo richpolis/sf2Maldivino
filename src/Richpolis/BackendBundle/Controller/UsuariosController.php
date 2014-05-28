@@ -232,7 +232,7 @@ class UsuariosController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('BackendBundle:Usuario')->find($id);
 
@@ -242,7 +242,7 @@ class UsuariosController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('users'));
     }

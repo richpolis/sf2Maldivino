@@ -103,9 +103,16 @@ class DefaultController extends Controller
      */
     public function productosAction() 
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                ->getCategoriaPublicacionActivas();
+        return array(
+          'categorias'=>$categorias,
+          'productos'=>$categorias[0]->getPublicaciones(),
+        );
     }
 
+    
     /**
      * @Route("/maldivino/express", name="frontend_maldivino_express")
      * @Template()
