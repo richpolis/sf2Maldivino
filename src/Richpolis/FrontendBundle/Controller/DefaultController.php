@@ -296,4 +296,18 @@ class DefaultController extends Controller
         }
         return $arreglo;
     }
+    
+    /**
+     * @Route("/pie/pagina", name="frontend_pie_pagina")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function piePaginaAction(){
+        $em = $this->getDoctrine()->getManager();
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                                ->findOneBy(array('slug'=>'pie-pagina'));
+        return array(
+          'piePagina'=>$configuracion,  
+        );
+    }
 }

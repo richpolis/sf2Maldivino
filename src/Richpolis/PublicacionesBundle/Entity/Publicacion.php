@@ -244,7 +244,7 @@ class Publicacion
     */
     public function setSlugAtValue()
     {
-        $this->slug = RpsStms::slugify($this->getTituloEs());
+        $this->slug = RpsStms::slugify($this->getTitulo());
     }
 
     

@@ -48,17 +48,19 @@ body {
   display: inline-block;
   vertical-align: top;
   position: relative;
-  top: px;
+  top: -1px;
   border-right: 1px solid #808080;
 }
 .container header.encabezado nav ul.menu li a {
   color: #808080;
   display: block;
   font-size: 22px;
+  height: 50px;
+  width: 100%;
 }
 .container header.encabezado nav ul.menu li.active,
 .container header.encabezado nav ul.menu li:hover {
-  border-bottom: 2px solid #f00;
+  border-bottom: 1px solid #f00;
 }
 .container header.encabezado nav ul.menu li.active a,
 .container header.encabezado nav ul.menu li:hover a {
