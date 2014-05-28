@@ -14,6 +14,12 @@ use Richpolis\BackendBundle\Utils\Richsys as RpsStms;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+use Richpolis\PublicacionesBundle\Entity\Publicacion;
+
+use PHPExcel_Cell;
+
 /**
  * CategoriaPublicacion controller.
  *
@@ -22,6 +28,30 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CategoriaPublicacionController extends Controller
 {
 
+	private $categorias = null;
+
+    protected function getCategoriasPublicacion() {
+        $em = $this->getDoctrine()->getManager();
+        if ($this->categorias == null) {
+            $this->categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                    ->findAll();
+        }
+        return $this->categorias;
+    }
+
+    protected function getCategoriaActual($categoriaId) {
+        $categorias = $this->getCategoriasPublicacion();
+        $categoriaActual = null;
+        foreach ($categorias as $categoria) {
+            if ($categoria->getId() == $categoriaId) {
+                $categoriaActual = $categoria;
+                break;
+            }
+        }
+        return $categoriaActual;
+    }
+	
+	
     /**
      * Lists all CategoriaPublicacion entities.
      *
@@ -326,11 +356,113 @@ class CategoriaPublicacionController extends Controller
     public function importarAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         if ($request->getMethod() == 'POST') {
-            
+            $archivo = $request->files->get('archivo');
+			if($archivo instanceof UploadedFile){
+				$uploads= $this->container->getParameter('richpolis.uploads');
+				$archivo->move(
+					$uploads,
+					$archivo->getClientOriginalName()
+				);
+				$fileName = $uploads . '/' . $archivo->getClientOriginalName();
+				$this->importar($fileName);
+			}else{
+				print_r("Error al subir archivo");
+				die();
+			}
          
-          return $this->redirect($this->generateUrl('categorias_publicaciones'));  
+          //return $this->redirect($this->generateUrl('categorias_publicaciones'));  
         }
         
         return $this->render("PublicacionesBundle:CategoriaPublicacion:importar.html.twig");
     }
+	
+	private function importar($filename){
+		  // estas lineas nos puede servir para comprobar que nuestro fichero
+		  // que queremos cargar existe
+		  // $fileWithPath - Es el nombre del fichero con el path completo
+		  // if(file_exists($fileWithPath)) {
+		  //      echo 'exist'."<br>";
+		  // } else {
+		  //      echo 'dont exist'."<br>";
+		  //      die;
+		  // }
+		  //cargamos el archivo a procesar.
+		  $objPHPExcel = $this->get('phpexcel')->createPHPExcelObject($filename);
+		  //se obtienen las hojas, el nombre de las hojas y se pone activa la primera hoja
+		  $total_sheets=$objPHPExcel->getSheetCount();
+		  $allSheetName=$objPHPExcel->getSheetNames();
+		  $objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
+		  //Se obtiene el número máximo de filas
+		  $highestRow = $objWorksheet->getHighestRow();
+		  //Se obtiene el número máximo de columnas
+		  $highestColumn = $objWorksheet->getHighestColumn();
+		  $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+		  //$headingsArray contiene las cabeceras de la hoja excel. Llos titulos de columnas
+		  $headingsArray = $objWorksheet->rangeToArray('A1:'.$highestColumn.'1',null, true, true, true);
+		  $headingsArray = $headingsArray[1];
+
+		  //Se recorre toda la hoja excel desde la fila 2 y se almacenan los datos
+		   $r = -1;
+		   $namedDataArray = array();
+		   for ($row = 2; $row <= $highestRow; ++$row) {
+				$dataRow = $objWorksheet->rangeToArray('A'.$row.':'.$highestColumn.$row,null, true, true, true);
+				if ((isset($dataRow[$row]['A'])) && ($dataRow[$row]['A'] > '')) {
+					  ++$r;
+					  foreach($headingsArray as $columnKey => $columnHeading) {
+							  $namedDataArray[$r][$columnHeading] = $dataRow[$row][$columnKey];
+					  } //endforeach
+				} //endif
+			}
+		   $this->loadToDB($namedDataArray);
+	}
+	
+	private function loadToDB($registros = null){
+		$em = $this->getDoctrine()->getManager();
+		if(!$registros && count($registros)>1){
+			foreach($registros as $botella){
+				if(strtolower($botella['ACTION'])=="alta"){
+					$categoria = $this->getCategoria($botella['CATEGORIA_ID'],$botella['CATEGORIA'],$em);
+					$producto = new Publicacion();
+					$producto->setTitulo($botella['TITULO']);
+					$producto->setPrecio($botella['PRECIO']);
+					$producto->setPosition($botella['POSITION']);
+					$producto->setIsActive($botella['IS_ACTIVE']);
+					$producto->setCategoria($categoria);
+					$producto->setUsuario($this->getUser());
+					$em->persist($producto);
+					$em->flush();
+				}
+			}
+		}
+	}
+	
+	private function getCategoria($id,$nombre,$em){
+		$categoria = null;
+		if(is_numeric($id) && $id>0){
+			$categoria = $this->getCategoriaActual($id);
+		}elseif(strlen($botella['CATEGORIA'])>0){
+			$categorias = $this->getCategoriasPublicacion();
+			foreach($categoria as $cat){
+				if($cat->getNombre()==$botella['CATEGORIA']){
+					$categoria = $cat;
+					break;
+				}
+					
+			}
+			if(!$categoria){
+				$categoria = new CategoriaPublicacion();
+				$categoria->setNombre($nombre);
+				$max = $em->getRepository('GaleriasBundle:Galeria')->getMaxPosicion();
+				if($max == null){
+					$max=0;
+				}
+				$categoria->setPosition($max+1);
+				$categoria->setIsActive(true);
+				$em->persist($categoria);
+				$em->flush();
+				$this->categorias[]=$categoria;
+			}	
+		}
+		return $categoria;	
+	}	
 }

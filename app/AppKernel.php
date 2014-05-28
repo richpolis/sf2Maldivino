@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
 
             new Richpolis\ShoppingCartBundle\RichpolisShoppingCartBundle(),
         );

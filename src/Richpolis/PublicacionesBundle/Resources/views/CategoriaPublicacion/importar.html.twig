@@ -80,12 +80,12 @@
 
                                 <div class="form profile">
                                     <!-- Edit profile form (not working)-->
-                                    <form class="form-horizontal" action="{{path('categorias_publicaciones_importar')}}" method="post">
+                                    <form class="form-horizontal" action="{{path('categorias_publicaciones_importar')}}" method="post" enctype="multipart/form-data">
                                         <div id="formulario_importar" class="row" style="padding-left: 20px;">
                                         <!-- Checkbox -->
                                         <div class="form-group col-lg-8 col-lg-offset-1 right">
-                                            <label for="file" class="required">Archivo</label>
-                                            <input type="file" id="archivo" name="file" required="required" class="form-control placeholder" placeholder="Archivo" data-bind="value: archivo">
+                                            <label for="archivo" class="required">Archivo</label>
+                                            <input type="file" id="archivo" name="archivo" required="required" class="form-control placeholder" placeholder="Archivo" data-bind="value: archivo">
                                         </div>
                                         <!-- Buttons -->
                                         <div class="form-group">
