@@ -19,20 +19,13 @@ class PublicacionType extends AbstractType
     {
         $builder
             ->add('titulo','text',array(
-                'label'=>'Botella','required'=>true,'attr'=>array(
+                'label'=>'Producto','required'=>true,'attr'=>array(
                     'class'=>'form-control placeholder',
-                    'placeholder'=>'Titulo',
-                    'data-bind'=>'value: titulo'
+                    'placeholder'=>'Producto',
+                    'data-bind'=>'value: producto'
                     )
                 ))    
-            ->add('descripcion',null,array(
-                'label'=>'Descripción',
-                'required'=>true,
-                'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
-                    )
-                ))
+            ->add('descripcion','hidden')
             ->add('precio','money',array(
                 'label'=>'Precio',
                 'required'=>true,
