@@ -106,18 +106,23 @@ body {
   height: 50px;
   line-height: 50px;
   color: #fff;
+  font-family: 'futura_lt_btlight';
 }
 .container .slidePrincipal {
   margin: 10px 0px;
 }
 .container article.anuncios {
   margin: 10px 5px;
-  height: 50px;
+  overflow: hidden;
   width: 100%;
 }
-.container article.anuncios #anuncios {
-  height: 50px;
+.container article.anuncios .anuncio {
   text-align: center;
+  font-size: 22px;
+  color: grey;
+}
+.container article.anuncios .item.active {
+  display: block;
 }
 .container article.promociones {
   margin: 10px 5px;
@@ -242,6 +247,17 @@ body {
   width: 100%;
   text-transform: capitalize;
 }
-p{
+article.contacto p{
  font-family: 'futura_lt_btlight'; 
+}
+
+article.productosList{
+ font-family: 'futura_lt_btlight'; 
+ text-align:  left; 
+ height: 400px;
+ overflow: auto;
+}
+
+section.sectionCotizador{
+  margin: 20px 0px
 }

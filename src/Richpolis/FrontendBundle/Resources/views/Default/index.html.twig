@@ -34,7 +34,7 @@
     <article class="anuncios slide">
         <div class="carousel-inner">
         {% for anuncio in anuncios %}
-            <div class="anuncio item">{{anuncio.contenido | raw }}</div>
+            <div class="anuncio item {% if loop.index == 1%} active {% endif %}">{{anuncio.contenido | raw }}</div>
         {% endfor %}
         </div>
     </article>
@@ -84,7 +84,10 @@
                 }
             });
 
-            $('.anuncios').carousel();
+            $('.anuncios').carousel({
+                interval: 7000,
+                pause: 'hover',
+            });
         });
 
     </script>

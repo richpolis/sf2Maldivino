@@ -212,15 +212,14 @@ class DefaultController extends Controller
         $cotizador = new Cotizador();
         $form = $this->createForm(new CotizadorType(), $cotizador);
         $request = $this->getRequest();
-        
+        $em = $this->getDoctrine()->getManager();
         if ($request->getMethod() == 'POST') {
             
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $datos=$form->getData();
-                
-                $em = $this->getDoctrine()->getManager();
+
                 $configuracion = $em->getRepository('BackendBundle:Configuraciones')
                                 ->findOneBy(array('slug'=>'email-cotizador'));
                 
@@ -249,11 +248,16 @@ class DefaultController extends Controller
             $mensaje="";
         }
         
+
+        $categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
+                ->getCategoriaPublicacionActivas();
+
         return array(
               'form' => $form->createView(),
               'ok'=>$ok,
               'error'=>$error,
               'mensaje'=>$mensaje,
+              'categorias'=>$categorias,
         );
     }
     

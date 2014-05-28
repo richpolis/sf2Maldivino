@@ -81,7 +81,7 @@ $(document).ready(function() {
       					{
       					'imagen': '{% if publicacion.imagen | length > 0 %} {{ publicacion.webPath|apply_filter('productos') }}	{% else %} http://placehold.it/200x330&text={{publicacion.titulo}}	{% endif %}',
       					'nombre': '{{ publicacion.titulo }}',
-      					'precio': '$ {{publicacion.precio | number_format }}',
+      					'precio': '$ {{publicacion.precio | number_format(2,'.',',') }}',
       					},
       				{% endfor %}
       			],	

@@ -16,51 +16,55 @@
             </div>
         </div>
     </article>
-    <article class="productosList">
-        <table class="productosList">
-            <thead>
-                <tr class="encabezadoItem">
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for producto as range(1,20) %}
-                    <tr class="productoItem">
-                        <td>
-                            <img src="http://placehold.it/200x330&text={{servicio}}" alt="" style="max-height: 120px;"/>
-                        </td>
-                        <td>Producto {{producto}}</td>
-                        <td>${{producto*random(7)|number_format(2,'.',',')}}</td>
-                    </tr>	
-                {% endfor %}
-            </tbody>
-        </table>
-    </article>
-    <article class="cotizador">
-        <h3 class="comentario">doble click el producto para agregar</h3>
-        <form action="{{path('frontend_cotizador')}}" id="formCotizador">
-            <table class="formulario">
-                <tbody class="cuerpoFormulario">
-                    <tr class="productoItemSel">
-                        <td>
-                            <input type="hidden" name="cotizador_">
-                            <input type="text">
-                        </td>
-                        <td>
-                            <input type="text" class="productoItemCantidad">
-                            <button class="productoItemCantidadUp">+</button>
-                            <button class="productoItemCantidadDown">-</button>
-                        </td>
-                        <td>
-                            $ precio
-                        </td>
+    <section  class="sectionCotizador row">
+        <article class="productosList col-lg-6">
+            <table class="productosList table">
+                <thead>
+                    <tr class="encabezadoItem">
+                        <th>Categoria</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
                     </tr>
-                </tbody>	
+                </thead>
+                <tbody>
+                    {% for categoria in categorias %}
+                        {% for producto in categoria.publicaciones %}
+                        <tr class="productoItem">
+                            <td>
+                                {{categoria}}
+                            </td>
+                            <td>{{ producto.titulo | raw }}</td>
+                            <td>${{ producto.precio|number_format(2,'.',',')}}</td>
+                        </tr>
+                        {% endfor %}	
+                    {% endfor %}
+                </tbody>
             </table>
-        </form>
-    </article>
+        </article>
+        <article class="cotizador  col-lg-6">
+            <h3 class="comentario">doble click el producto para agregar</h3>
+            <form action="{{path('frontend_cotizador')}}" id="formCotizador">
+                <table class="formulario">
+                    <tbody class="cuerpoFormulario">
+                        <tr class="productoItemSel">
+                            <td>
+                                <input type="hidden" name="cotizador_">
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text" class="productoItemCantidad">
+                                <button class="productoItemCantidadUp">+</button>
+                                <button class="productoItemCantidadDown">-</button>
+                            </td>
+                            <td>
+                                $ precio
+                            </td>
+                        </tr>
+                    </tbody>	
+                </table>
+            </form>
+        </article>
+    </section>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

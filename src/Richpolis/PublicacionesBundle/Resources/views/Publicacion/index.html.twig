@@ -109,7 +109,7 @@
                                 {% endif %}
                                 </td>
                                 <td>{{ entity.titulo }}</td>
-                                <td>${{ "%.2f"|format(entity.precio) }}</td>
+                                <td>${{ entity.precio|number_format(2,'.',',') }}</td>
                                 <td>
                                     {% if entity.isActive %}
                                         <i class="fa fa-check-circle"></i>

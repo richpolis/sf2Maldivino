@@ -24,6 +24,11 @@
             <td>{{ publicacion.precio | number_format }}</td>
             <td>{{ publicacion.position }}</td>
             <td>{{ publicacion.isActive }}</td>
+            <td>
+                {% if publicacion.imagen | length > 0 %}
+                    {{ publicacion.imagen }}
+                {% endif %}
+            </td>
             </tr>
             {% endfor %}
         {% endfor %}    
