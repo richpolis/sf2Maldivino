@@ -319,7 +319,54 @@ class Publicacion
             $this->temp = null;
         }
         
+        $this->crearThumbnail();
+        
         $this->file = null;
+    }
+    
+    /*
+     * Crea el thumbnail y lo guarda en un carpeta dentro del webPath thumbnails
+     * 
+     * @return void
+     */
+    public function crearThumbnail($width=190,$height=323,$path=""){
+        $imagine    = new \Imagine\Gd\Imagine();
+        $collage    = $imagine->create(new \Imagine\Image\Box(190, 323));
+        $mode       = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+        $image      = $imagine->open($this->getAbsolutePath());
+        $sizeImage  = $image->getSize();
+        if(strlen($path)==0){
+            $path = $this->getAbosluteThumbnailPath();
+        }
+        if($height == null){
+            $height = $sizeImage->getHeight();
+            if($height>323){
+                $height = 323;
+            }
+        }
+        if($width == null){
+            $width = $sizeImage->getWidth();
+            if($width>190){
+                $width = 190;
+            }
+        }
+        $size   =new \Imagine\Image\Box($width,$height);
+        $image->thumbnail($size,$mode)->save($path);
+        $image      = $imagine->open($path);
+        $size = $image->getSize();
+        if((190 - $size->getWidth())>1){
+            $width = ceil((190 - $size->getWidth())/2);
+        }else{
+            $width = 0;
+        }
+        if((323 - $size->getHeight())>1){
+            $height = ceil((323 - $size->getHeight())/2);
+        }else{
+            $height =0;
+        }    
+        $centrado = new \Imagine\Image\Point($width, $height);
+        $collage->paste($image,$centrado);
+        $collage->save($path);        
     }
 
     /**
@@ -330,6 +377,11 @@ class Publicacion
       if ($file = $this->getAbsolutePath()) {
         if(file_exists($file)){
             unlink($file);
+        }
+      }
+      if($thumbnail=$this->getAbosluteThumbnailPath()){
+         if(file_exists($thumbnail)){
+            unlink($thumbnail);
         }
       }
     }
@@ -349,9 +401,24 @@ class Publicacion
         return null === $this->imagen ? null : $this->getUploadDir().'/'.$this->imagen;
     }
     
+    public function getThumbnailWebPath()
+    {
+        if(!file_exists($this->getAbosluteThumbnailPath())){
+            if(file_exists($this->getAbsolutePath())){
+                $this->crearThumbnail();
+            }
+        }
+        return null === $this->imagen ? null : $this->getUploadDir().'/thumbnails/'.$this->imagen;
+        
+    }
+    
     public function getAbsolutePath()
     {
         return null === $this->imagen ? null : $this->getUploadRootDir().'/'.$this->imagen;
+    }
+    
+    public function getAbosluteThumbnailPath(){
+        return null === $this->imagen ? null : $this->getUploadRootDir().'/thumbnails/'.$this->imagen;
     }
 
     public function getDescripcionCorta(){

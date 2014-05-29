@@ -7,26 +7,29 @@
 {% endblock %}
 
 {% block contenido %}
-        <article class="servicios">
-            <h2>nuestros servicios</h2>
-      			<ul class="servicios">
-      			    {% for servicio in servicios %}
-      				<li class="servicio">
-      					<figure class="logo">
-						    {% if servicio.imagen | length > 0 %}
-      						<img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
-							{% else %}
-							<img src="http://placehold.it/200x200&text=servicio" alt="">
-							{% endif %}
-      					</figure>
-      					<div class="contenido">
-      						<h3>{{servicio.servicio}}</h3>
-      						{{ servicio.descripcion | raw }}
-      					</div>
-      				</li>
-      				{% endfor %}
-      			</ul>
-        </article>
+    <article class="servicios">
+        <h2>nuestros servicios</h2>
+        <ul class="servicios">
+            {% for servicio in servicios %}
+                <li class="servicio">
+                    <figure class="logo">
+                        {% if servicio.imagen | length > 0 %}
+                            <a href="{{servicio.webPath }}" class="fancybox">
+                            <img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
+                        {% else %}
+                            <a href="http://placehold.it/400x400&text=servicio" class="fancybox">
+                            <img src="http://placehold.it/200x200&text=servicio" alt="">
+                        {% endif %}
+                            </a>
+                    </figure>
+                    <div class="contenido">
+                        <h3>{{servicio.servicio}}</h3>
+                        {{ servicio.descripcion | raw }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </article>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

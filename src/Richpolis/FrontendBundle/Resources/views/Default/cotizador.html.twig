@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block contenido %}
-    <article class="buscardor">
-        <div class="buscador">
-            <div class="titulo">
+    <article class="buscador">
+        <div class="buscador row ">
+            <div class="titulo col-lg-6">
                 <h2>busque el producto deseado: </h2>
             </div>
-            <div class="formulario">
+            <div class="formulario col-lg-6">
                 <input type="text" class="buscador">
             </div>
         </div>
@@ -26,45 +26,57 @@
                         <th>Precio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for categoria in categorias %}
-                        {% for producto in categoria.publicaciones %}
-                        <tr class="productoItem">
-                            <td>
-                                {{categoria}}
-                            </td>
-                            <td>{{ producto.titulo | raw }}</td>
-                            <td>${{ producto.precio|number_format(2,'.',',')}}</td>
-                        </tr>
-                        {% endfor %}	
-                    {% endfor %}
+                <tbody id="listaProductos">
+                    
                 </tbody>
             </table>
         </article>
         <article class="cotizador  col-lg-6">
             <h3 class="comentario">doble click el producto para agregar</h3>
-            <form action="{{path('frontend_cotizador')}}" id="formCotizador">
-                <table class="formulario">
-                    <tbody class="cuerpoFormulario">
-                        <tr class="productoItemSel">
-                            <td>
-                                <input type="hidden" name="cotizador_">
-                                <input type="text">
-                            </td>
-                            <td>
-                                <input type="text" class="productoItemCantidad">
-                                <button class="productoItemCantidadUp">+</button>
-                                <button class="productoItemCantidadDown">-</button>
-                            </td>
-                            <td>
-                                $ precio
-                            </td>
-                        </tr>
-                    </tbody>	
-                </table>
-            </form>
+            <table class="formulario table">
+               <tbody id="listaFormulario">
+                        
+               </tbody>	
+           </table>
         </article>
     </section>
+
+{% raw %}
+<script type="text/template" id="productos_template">
+    {% for producto in productos %}
+        {% if producto.seleccionado == false %}
+        <tr class="productoItem" data-id='{{producto.id}}'>
+        <td>
+            {{producto.categoria}}
+        </td>
+        <td>{{ producto.titulo|raw }}</td>
+        <td>${{ producto.precio|number_format}}</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+</script>
+<script type="text/template" id="formulario_template">
+    {% for producto in productos %}
+        {% if producto.seleccionado %}
+        <tr class="productoItemSel" data-id="{{producto.id}}">
+          <td>
+            <input type="hidden" name="producto[{{loop.index-1}}][id]">
+            {{producto.producto}}
+          </td>
+          <td class="tdCantidad">
+            <input type="text" class="productoItemCantidad" name="producto[{{loop.index-1}}][cantidad]" value="{{producto.cantidad}}">
+            <button class="productoItemCantidadUp"></button>
+            <button class="productoItemCantidadDown"></button>
+          </td>
+          <td>
+            $ {{producto.cantidad * producto.precio}}
+          </td>
+       </tr>
+       {% endif %}
+    {% endfor %}
+</script>
+{% endraw %}
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -86,4 +98,35 @@
         });
 
     </script>
+<script src="{{asset('bundles/frontend/js/app_cotizador.js')}}"></script>  
+<script type="text/javascript">
+$(function(){
+    window.api = {
+      datos: [
+          {% for categoria in categorias %}
+            {% for producto in categoria.publicaciones %}
+                {
+                  id: {{ producto.id }},
+                  slug: '{{ producto.slug }}',
+                  categoria: '{{ categoria }}',
+                  producto: '{{ producto.titulo }}',
+                  precio: {{ producto.precio }},
+                  seleccionado: false,
+                  cantidad: 0,
+                },
+            {% endfor %}
+          {% endfor %}                
+      ],      
+    };
+    $(".loader").fadeIn();
+    window.routers.app = new Productos.Routers.App();
+    window.collections.productos = new Productos.Collections.Productos(window.api.datos);
+    window.collections.productos.url='/productos';
+    $(".loader").fadeOut();
+    Backbone.history.start({
+        root : '/',
+        pushState:false
+    });
+});
+</script> 
 {% endblock %}

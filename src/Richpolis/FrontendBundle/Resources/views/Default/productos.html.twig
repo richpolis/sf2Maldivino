@@ -79,7 +79,7 @@ $(document).ready(function() {
       		'productos': [
       				{% for publicacion in categoria.publicaciones %}
       					{
-      					'imagen': '{% if publicacion.imagen | length > 0 %} {{ publicacion.webPath|apply_filter('productos') }}	{% else %} http://placehold.it/200x330&text={{publicacion.titulo}}	{% endif %}',
+      					'imagen': '{% if publicacion.imagen | length > 0 %} {{ publicacion.thumbnailWebPath }}	{% else %} http://placehold.it/190x323&text={{publicacion.titulo}}	{% endif %}',
       					'nombre': '{{ publicacion.titulo }}',
       					'precio': '$ {{publicacion.precio | number_format(2,'.',',') }}',
       					},

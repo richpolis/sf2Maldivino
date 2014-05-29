@@ -187,6 +187,7 @@ body {
 }
 .container article.productos {
   margin: 10px 0px;
+  min-height: 190px;
 }
 .container article.productos h2 {
   font-family: 'bebas_neueregular';
@@ -258,6 +259,88 @@ article.productosList{
  overflow: auto;
 }
 
+article.buscador{
+  margin-top: 10px;
+}
+
+article.buscador h2{
+  margin: 10px;
+  font-family: 'bebas_neueregular';
+  font-size: 1.5em;
+  color: grey;
+}
+
+article.buscador div.formulario{
+  background: url("../images/keyarts/buscar.png") no-repeat center center;
+  position: relative;
+}
+
+article.buscador input.buscador{
+  width: 330px;
+  color: grey;
+  font-family: 'futura_lt_btlight';
+  padding: 5px;
+  position: absolute;
+  top: 13px;
+  left: 70px;
+  border: none;
+}
+
 section.sectionCotizador{
   margin: 20px 0px
+}
+
+div.buscador .titulo, 
+div.buscador .formulario {
+  height: 70px;
+  line-height: 40px;
+  font-size: 20px;
+}
+
+article.cotizador{
+  font-family: 'futura_lt_btlight';
+  text-transform: capitalize;
+}
+
+article.cotizador h3{
+  margin: 10px;
+  font-family: 'bebas_neueregular';
+  font-size: 1.3em;
+  color: grey;
+}
+
+article.cotizador button.productoItemCantidadUp{
+  background: url("../images/keyarts/mas.png") no-repeat center center;
+  content: "";
+  width: 24px;
+  height: 23px;
+  border: none;
+  margin-top: 5px;
+  position: absolute;
+  top: 3px;
+  left: 45px;
+}
+article.cotizador button.productoItemCantidadDown{
+  background: url("../images/keyarts/menos.png") no-repeat center center;
+  content: ""; 
+  width: 24px;
+  height: 23px;
+  border: none;
+  margin-top: 5px;
+  position: absolute;
+  top: 3px;
+  left: 70px;
+}
+
+article.cotizador .tdCantidad{
+  position:relative;
+  width: 100px;
+}
+
+article.cotizador input
+{
+  position: absolute;
+  top: 5px;
+  left: 1px;
+  width: 40px;
 }

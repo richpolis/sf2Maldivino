@@ -103,7 +103,7 @@
                                 <td>{{ entity.categoria }}</td>
                                 <td>
                                 {% if entity.imagen | length > 0 %}
-                                    <img src="{{entity.webPath}}" style="max-width: 100px;"/>
+                                    <img src="{{entity.thumbnailWebPath}}" style="max-height: 100px; max-width: 100px;"/>
                                 {% else  %}
                                     sin imagen 
                                 {% endif %}
