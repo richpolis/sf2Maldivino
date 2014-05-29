@@ -61,11 +61,11 @@ Productos.Routers.App = Backbone.Router.extend({
             }else{
                 window.views.show.model= model;
             }
-            views.show.render();
+            views.show.render({silent: true});
             $(".loader").fadeOut();
         }else{
             window.views.show.model= model;
-            views.show.render().$el.fadeIn("fast");
+            views.show.render({silent: true}).$el.fadeIn("fast");
             $(".loader").fadeOut();
         }
         window.views.show.seleccionarCategoria();
@@ -80,11 +80,11 @@ Productos.Routers.App = Backbone.Router.extend({
             }else{
                 window.views.show.model= models[0];
             }
-            views.show.render();
+            views.show.render({silent: true});
             $(".loader").fadeOut();
         }else{
             window.views.show.model= models[0];
-            views.show.render().$el.fadeIn("fast");
+            views.show.render({silent: true}).$el.fadeIn("fast");
             $(".loader").fadeOut();
         }
         window.views.show.seleccionarCategoria();

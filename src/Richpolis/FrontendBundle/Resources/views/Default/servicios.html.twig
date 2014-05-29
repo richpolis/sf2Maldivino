@@ -13,7 +13,11 @@
       			    {% for servicio in servicios %}
       				<li class="servicio">
       					<figure class="logo">
+						    {% if servicio.imagen | length > 0 %}
       						<img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
+							{% else %}
+							<img src="http://placehold.it/200x200&text=servicio" alt="">
+							{% endif %}
       					</figure>
       					<div class="contenido">
       						<h3>{{servicio.servicio}}</h3>
