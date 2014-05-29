@@ -36,44 +36,38 @@
             <table class="formulario table">
                <tbody id="listaFormulario">
                         
-               </tbody>	
+               </tbody>
+			   <tfoot>
+			   	<tr>
+					<td colspan="3" id="importeTotal" style="text-align: right;">Importe total $</td>
+				</tr>
+			   </tfoot>
            </table>
+		   <button id="enviarPedido" class="btn btn-danger right">Enviar pedido</button>
         </article>
     </section>
 
 {% raw %}
 <script type="text/template" id="productos_template">
-    {% for producto in productos %}
-        {% if producto.seleccionado == false %}
-        <tr class="productoItem" data-id='{{producto.id}}'>
         <td>
-            {{producto.categoria}}
+            {{ categoria }}
         </td>
-        <td>{{ producto.titulo|raw }}</td>
-        <td>${{ producto.precio|number_format}}</td>
-        </tr>
-        {% endif %}
-    {% endfor %}
+        <td>{{ producto|raw }}</td>
+        <td>{{ get_precio}}</td>
 </script>
 <script type="text/template" id="formulario_template">
-    {% for producto in productos %}
-        {% if producto.seleccionado %}
-        <tr class="productoItemSel" data-id="{{producto.id}}">
           <td>
-            <input type="hidden" name="producto[{{loop.index-1}}][id]">
-            {{producto.producto}}
+            <input type="hidden" name="producto[][id]" value="{{id}}">
+            {{producto | raw }}
           </td>
           <td class="tdCantidad">
-            <input type="text" class="productoItemCantidad" name="producto[{{loop.index-1}}][cantidad]" value="{{producto.cantidad}}">
+            <input type="text" class="productoItemCantidad" name="producto[][cantidad]" value="{{cantidad}}" readyonly="readyonly">
             <button class="productoItemCantidadUp"></button>
             <button class="productoItemCantidadDown"></button>
           </td>
           <td>
-            $ {{producto.cantidad * producto.precio}}
+            {{get_importe}}
           </td>
-       </tr>
-       {% endif %}
-    {% endfor %}
 </script>
 {% endraw %}
 
@@ -94,14 +88,14 @@
                     autoplay: 0
                 }
             });
-            $.iniciarCircle();
         });
 
     </script>
 <script src="{{asset('bundles/frontend/js/app_cotizador.js')}}"></script>  
 <script type="text/javascript">
 $(function(){
-    window.api = {
+    
+	window.api = {
       datos: [
           {% for categoria in categorias %}
             {% for producto in categoria.publicaciones %}
@@ -118,15 +112,64 @@ $(function(){
           {% endfor %}                
       ],      
     };
-    $(".loader").fadeIn();
+    
+	$(".loader").fadeIn();
     window.routers.app = new Productos.Routers.App();
     window.collections.productos = new Productos.Collections.Productos(window.api.datos);
     window.collections.productos.url='/productos';
     $(".loader").fadeOut();
+	
     Backbone.history.start({
         root : '/',
         pushState:false
     });
+	
+	$("#enviarPedido").on('click', function(e){
+            e.preventDefault();
+            var productos = window.collections.productos.where({seleccionado: true});
+            var datos = {
+                pedidos: []
+            };
+            var dato={};
+            if (productos && productos.length > 0){
+                for (var cont = 0; cont < productos.length; cont++) {
+                    dato = {
+                        id: productos[cont].get('id'),
+                        producto: productos[cont].get('producto'),
+                        cantidad: productos[cont].get('cantidad'),
+                        precio: productos[cont].get('precio'),
+                        importe: productos[cont].get('importe')
+                    };
+                    datos.pedidos.push(dato);
+                }
+                $.ajax({
+                    url: '{{path('frontend_enviar_pedido')}}',
+                    data: datos,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(data) {
+                        alert(data.mensaje);
+						if(data.enviado){
+							window.collections.productos.quitarSeleccionados();
+							views.listProductos.render();
+							views.listFormulario.render();
+						}
+                        console.log(data);
+                    },
+                    error: function(data) {
+					    debugger;
+                        alert("Error en datos");
+                        console.log(data);
+                    }
+                });
+            }else{
+                alert('No hay productos selecionados');
+            }
+        });
+
+	
+	
 });
+
 </script> 
 {% endblock %}

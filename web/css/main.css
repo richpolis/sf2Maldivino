@@ -75,7 +75,7 @@ body {
 .container header.encabezado ul.categorias {
   padding: 10px;
   margin: 10px 0px 10px;
-  background: url("../images/keyarts/fondofooter.png") repeat-y;
+  background: #ec1b2f;
 }
 .container header.encabezado ul.categorias li.categoria {
   list-style: none;
@@ -93,6 +93,7 @@ body {
 }
 .container header.encabezado ul.categorias li.categoria a {
   color: #fff;
+  font-size: 18px;
 }
 .container header.encabezado ul.categorias li.categoria.active,
 .container header.encabezado ul.categorias li.categoria:hover {
@@ -224,10 +225,12 @@ body {
   display: block;
   text-align: center;
   font-size: 20px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #c9c9c9; 
+  width: 190px;
+  margin: 10px auto;	
 }
 .container article.productos ul.productos li.producto img {
-  -webkit-box-shadow: 0 0 3px 2px #808080;
+  -webkit-box-shadow: 0 0 3px 2px #e4e4e4;
   -moz-box-shadow: 0 0 3px 2px #808080;
   -ms-box-shadow: 0 0 3px 2px #808080;
   -o-box-shadow: 0 0 3px 2px #808080;

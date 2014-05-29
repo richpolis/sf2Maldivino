@@ -329,7 +329,7 @@ class Publicacion
      * 
      * @return void
      */
-    public function crearThumbnail($width=190,$height=323,$path=""){
+    public function crearThumbnail($width=174,$height=295,$path=""){
         $imagine    = new \Imagine\Gd\Imagine();
         $collage    = $imagine->create(new \Imagine\Image\Box(190, 323));
         $mode       = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;

@@ -205,58 +205,15 @@ class DefaultController extends Controller
 
     /**
      * @Route("/cotizador", name="frontend_cotizador")
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Template("FrontendBundle:Default:cotizador.html.twig")
      */
     public function cotizadorAction() {
-        $cotizador = new Cotizador();
-        $form = $this->createForm(new CotizadorType(), $cotizador);
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        if ($request->getMethod() == 'POST') {
-            
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $datos=$form->getData();
-
-                $configuracion = $em->getRepository('BackendBundle:Configuraciones')
-                                ->findOneBy(array('slug'=>'email-cotizador'));
-                
-                $message = \Swift_Message::newInstance()
-                        ->setSubject('Solicitud de cotización')
-                        ->setFrom($datos->getEmail())
-                        ->setTo($configuracion->getTexto())
-                        ->setBody($this->renderView('FrontendBundle:Default:cotizadorEmail.html.twig', array('datos' => $datos)), 'text/html');
-                $this->get('mailer')->send($message);
-
-                // Redirige - Esto es importante para prevenir que el usuario
-                // reenvíe el formulario si actualiza la página
-                $ok=true;
-                $error=false;
-                $mensaje="La solicitud de cotización se ha enviado";
-                $cotizador = new Cotizador();
-                $form = $this->createForm(new CotizadorType(), $cotizador);
-            }else{
-                $ok=false;
-                $error=true;
-                $mensaje="El mensaje no se ha podido enviar";
-            }
-        }else{
-            $ok=false;
-            $error=false;
-            $mensaje="";
-        }
-        
-
         $categorias = $em->getRepository('PublicacionesBundle:CategoriaPublicacion')
                 ->getCategoriaPublicacionActivas();
 
         return array(
-              'form' => $form->createView(),
-              'ok'=>$ok,
-              'error'=>$error,
-              'mensaje'=>$mensaje,
               'categorias'=>$categorias,
         );
     }
@@ -320,5 +277,42 @@ class DefaultController extends Controller
         return array(
           'piePagina'=>$configuracion,  
         );
+    }
+	
+	/**
+     * @Route("/enviar/pedido", name="frontend_enviar_pedido")
+     * @Method("POST")
+     */
+    public function enviarPedidoAction() {
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST') {
+			$datos = $request->request->all();
+                $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                                ->findOneBy(array('slug'=>'email-cotizador'));
+              
+                $message = \Swift_Message::newInstance()
+                        ->setSubject('Solicitud de cotización')
+                        ->setFrom('noreply@maldivino.com')
+                        ->setTo($configuracion->getTexto())
+                        ->setBody($this->renderView('FrontendBundle:Default:cotizadorEmail.html.twig', array('datos' => $datos)), 'text/html');
+                $this->get('mailer')->send($message);
+
+                // Redirige - Esto es importante para prevenir que el usuario
+                // reenvíe el formulario si actualiza la página
+                $ok=true;
+                $error=false;
+                $mensaje="La solicitud de cotización se ha enviado";
+
+        }else{
+            $ok=false;
+            $error=false;
+            $mensaje="";
+        }
+		
+		$response = new JsonResponse();
+        $response->setData(array('enviado'=>$ok,'error'=>$error,'mensaje'=>$mensaje));
+        return $response;
+
     }
 }

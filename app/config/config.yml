@@ -109,7 +109,7 @@ avalanche_imagine:
             options: { size: [200, 200], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
         productos:
             type:    thumbnail
-            options: { size: [199, 331], mode: outbound, cache_type: public, cache_expires: '2 weeks' }
+            options: { size: [199, 331], mode: inset, cache_type: public, cache_expires: '2 weeks' }
         galerias_productos:
             type:    thumbnail
             options: { size: [510, 330], mode: inset, cache_type: public, cache_expires: '2 weeks' }
