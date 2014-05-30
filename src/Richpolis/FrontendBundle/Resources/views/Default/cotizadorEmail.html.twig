@@ -4,6 +4,11 @@
 
 {% block body %}
 <h1>Pedido desde Maldivino.com</h1>
+<ul>
+<li><strong>Cliente: </strong>{{datos.nombreCliente}}</li>
+<li><strong>Email: </strong>{{datos.emailCliente}}</li>
+<li><strong>Telefono: </strong>{{datos.telefonoCliente}}</li>
+</ul>
 <table>
 	<thead>
 	<tr  style="background-color: gray;color: white;">
@@ -21,21 +26,22 @@
 				{{producto.producto}}
 			</td>
 			<td>
-				{{producto.cantidad|number_format(2,',','.')}}
+				{{producto.cantidad|number_format(2,'.',',')}}
 			</td>
 			<td>
-				${{producto.precio|number_format(2,',','.')}}
+				${{producto.precio|number_format(2,'.',',')}}
 			</td>
 			<td>
-				${{producto.importe|number_format(2,',','.')}}
+				${{producto.importe|number_format(2,'.',',')}}
 			</td>
 		</tr>
 		{% set importe = importe + producto.importe %}
 	{% endfor %}
 	</tbody>
 	<tfoot>
-		<tr>
-			<td colspan="4">Importe total ${{importe|number_format(2,',','.')}}</td>
+		<tr  style="background-color: gray;color: white;">
+			<td colspan="3">Importe total </td>
+			<td>${{importe|number_format(2,'.',',')}}</td>
 		</tr>
 	</tfoot>
 </table>

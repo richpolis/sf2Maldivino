@@ -18,7 +18,7 @@
     </article>
     <section  class="sectionCotizador row">
         <article class="productosList col-lg-6">
-            <table class="productosList table">
+            <table class="productosList table table-striped">
                 <thead>
                     <tr class="encabezadoItem">
                         <th>Categoria</th>
@@ -32,21 +32,67 @@
             </table>
         </article>
         <article class="cotizador  col-lg-6">
+            
             <h3 class="comentario">doble click el producto para agregar</h3>
-            <table class="formulario table">
+            <table class="formulario table table-striped">
+               <thead>
+                   <tr>
+                       <th>Producto</th>
+                       <th>Cantidad</th>
+                       <th>Subtotal</th>
+                   </tr>
+               </thead> 
                <tbody id="listaFormulario">
                         
                </tbody>
 			   <tfoot>
 			   	<tr>
-					<td colspan="3" id="importeTotal" style="text-align: right;">Importe total $</td>
+					<td colspan="2" style="text-align: right;">total</td>
+                    <td  id="importeTotal"></td>
 				</tr>
 			   </tfoot>
            </table>
-		   <button id="enviarPedido" class="btn btn-danger right">Enviar pedido</button>
+		   <button id="showFormModalCliente" class="btn btn-danger right"  data-toggle="modal" data-target="#formModalCliente">Enviar pedido</button>
+           <div id="errorFormulario" class="alert alert-danger">
+                    
+            </div>
+            <div id="successFormulario" class="alert alert-success">
+                
+            </div>
         </article>
     </section>
-
+<!-- Modal -->
+<div class="modal fade" id="formModalCliente" tabindex="-1" role="dialog" aria-labelledby="titleFormModalCliente" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="titleFormModalCliente">Datos del cliente</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="nombreCliente">Nombre</label>
+            <input type="text" class="form-control" id="nombreCliente"
+                   placeholder="Nombre">
+        </div>
+        <div class="form-group">
+            <label for="emailCliente">Email</label>
+            <input type="email" class="form-control" id="emailCliente"
+                   placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="telefonoCliente">Telefono</label>
+            <input type="text" class="form-control" id="telefonoCliente"
+                   placeholder="Telefono">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:enviarPedido();">Enviar pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% raw %}
 <script type="text/template" id="productos_template">
         <td>
@@ -56,17 +102,20 @@
         <td>{{ get_precio}}</td>
 </script>
 <script type="text/template" id="formulario_template">
-          <td>
+          <td class="tdProducto">
             <input type="hidden" name="producto[][id]" value="{{id}}">
             {{producto | raw }}
           </td>
           <td class="tdCantidad">
-            <input type="text" class="productoItemCantidad" name="producto[][cantidad]" value="{{cantidad}}" readyonly="readyonly">
+            <input type="text" class="productoItemCantidad" name="producto[][cantidad]" value="{{cantidad}}" readonly="readonly">
             <button class="productoItemCantidadUp"></button>
             <button class="productoItemCantidadDown"></button>
           </td>
-          <td>
+          <td class="tdImporte">
             {{get_importe}}
+            <a href="#" class="quitarProducto">
+                <i class="fa fa-times"></i>   
+            </a>
           </td>
 </script>
 {% endraw %}
@@ -77,6 +126,7 @@
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
     <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
+    <script src="{{asset('js/jquery.noty.js')}}"></script>
     <script>
         $(document).ready(function() {
             $("a.fancybox").fancybox();
@@ -95,6 +145,9 @@
 <script type="text/javascript">
 $(function(){
     
+    $("#successFormulario").alert('close')
+    $("#errorFormulario").alert('close')
+
 	window.api = {
       datos: [
           {% for categoria in categorias %}
@@ -124,14 +177,24 @@ $(function(){
         pushState:false
     });
 	
-	$("#enviarPedido").on('click', function(e){
-            e.preventDefault();
-            var productos = window.collections.productos.where({seleccionado: true});
-            var datos = {
-                pedidos: []
-            };
-            var dato={};
-            if (productos && productos.length > 0){
+	$("#showFormModalCliente").on('click', function(e){
+        e.preventDefault();
+    });
+
+    
+	
+	
+});
+var enviarPedido = function(){
+        var productos = window.collections.productos.where({seleccionado: true});
+        var datos = {
+            pedidos: []
+        };
+        var dato={};
+        if (productos && productos.length > 0 && validarDatosCliente()){
+                debugger;
+                $("#formModalCliente").modal("hide");
+                $(".loader").fadeIn();
                 for (var cont = 0; cont < productos.length; cont++) {
                     dato = {
                         id: productos[cont].get('id'),
@@ -142,34 +205,67 @@ $(function(){
                     };
                     datos.pedidos.push(dato);
                 }
+                datos.nombreCliente = $("#nombreCliente").val();
+                datos.emailCliente = $("#emailCliente").val();
+                datos.telefonoCliente = $("#telefonoCliente").val();
                 $.ajax({
                     url: '{{path('frontend_enviar_pedido')}}',
                     data: datos,
                     type: 'POST',
                     dataType: 'json',
                     success: function(data) {
-                        alert(data.mensaje);
-						if(data.enviado){
-							window.collections.productos.quitarSeleccionados();
-							views.listProductos.render();
-							views.listFormulario.render();
-						}
+                        $(".loader").fadeOut();
+                        if(data.enviado){
+                            window.collections.productos.quitarSeleccionados();
+                            views.listProductos.render();
+                            views.listFormulario.render();
+                            $("#successFormulario").text(data.mensaje);
+                            $("#successFormulario").alert();
+                            setTimeout(function(){$("#successFormulario").alert('close')},2000);
+                        }
                         console.log(data);
                     },
                     error: function(data) {
-					    debugger;
-                        alert("Error en datos");
+                        $(".loader").fadeOut();
+                        debugger;
                         console.log(data);
+                        $("#errorFormulario").text("Error al enviar formulario");
+                        $("#errorFormulario").alert();
+                        setTimeout(function(){$("#errorFormulario").alert('close')},2000);
                     }
                 });
             }else{
-                alert('No hay productos selecionados');
-            }
-        });
+            $("#errorFormulario").text("No hay productos seleccionados");
+            $("#errorFormulario").alert();
+            setTimeout(function(){$("#errorFormulario").alert('close')},2000);   
+        }
+    };
 
-	
-	
-});
+var validarDatosCliente = function(){
+    valor = document.getElementById("nombreCliente").value;
+    if( valor == null || valor.length == 0 || /^\s+$/.test(valor) ) {
+      document.getElementById("nombreCliente").focus();
+      alert("Ingresar nombre correcto");
+      return false;
+    }
+    valor = document.getElementById("emailCliente").value;
+    var expresion = /^([a-zA-Z0-9_.-])+@(([a-zA-z0-9-])+.)+([a-zA-Z0-9-]{2,4})+$/;
+    if( !expresion.test(valor) ) {
+        document.getElementById("emailCliente").focus();
+        alert("Ingresar email correcto")
+        return false;
+    }
+
+    valor = document.getElementById("telefonoCliente").value;
+    if( valor == null || valor.length == 0 || /^\s+$/.test(valor) ) {
+      document.getElementById("telefonoCliente").focus();
+      alert("Ingresar un telefono para contacto");
+      return false;
+    }
+
+
+    return true;
+};
 
 </script> 
 {% endblock %}

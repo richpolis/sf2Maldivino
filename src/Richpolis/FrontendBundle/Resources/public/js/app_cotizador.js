@@ -156,7 +156,7 @@ Productos.Views.ItemFormulario = Backbone.View.extend({
 	events: {
       "click .productoItemCantidadUp" : "masUno",
 	  "click .productoItemCantidadDown" : "menosUno",
-	  "keypress input.productoItemCantidad": "actualizarCantidad", 	
+	  "click .quitarProducto": "quitarProducto", 	
     },
     initialize: function() {
         this.model.on("change", this.render, this);
@@ -183,7 +183,15 @@ Productos.Views.ItemFormulario = Backbone.View.extend({
 		if(cantidad!==this.model.get('cantidad')){
 			this.model.set({cantidad: cantidad});
 		}
-	}
+	},
+    quitarProducto: function(e){
+        e.preventDefault();
+        this.model.set({seleccionado: false,cantidad: 0});
+        views.listProductos.render();
+        this.$el.fadeOut();
+        views.listFormulario.actualizarImporteTotal();
+        this.remove();
+    }
 
 });
 
@@ -231,7 +239,7 @@ Productos.Views.ListFormulario = Backbone.View.extend({
 	actualizarImporteTotal: function(){
 		var importe = window.collections.productos.importeTotal();
 		var conFormato = formatNumber.new(importe,'$ ');
-		$("#importeTotal").html('Importe total '+ conFormato);
+		$("#importeTotal").html(conFormato);
 	},
 });
 
