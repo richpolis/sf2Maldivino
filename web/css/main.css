@@ -230,11 +230,12 @@ body {
   margin: 10px auto;	
 }
 .container article.productos ul.productos li.producto img {
-  -webkit-box-shadow: 0 0 3px 2px #e4e4e4;
-  -moz-box-shadow: 0 0 3px 2px #808080;
-  -ms-box-shadow: 0 0 3px 2px #808080;
-  -o-box-shadow: 0 0 3px 2px #808080;
-  box-shadow: 0 0 3px 2px #808080;
+  -webkit-box-shadow: 0 0 3px 2px #feedef;
+  -moz-box-shadow: 0 0 3px 2px #feedef;
+  -ms-box-shadow: 0 0 3px 2px #feedef;
+  -o-box-shadow: 0 0 3px 2px #feedef;
+  box-shadow: 0 0 3px 2px #feedef;
+  border: 1px solid #e4e4e4;
 }
 .container article.maldivinoExpress {
   margin: 10px 0px;
@@ -303,6 +304,7 @@ div.buscador .formulario {
 article.cotizador{
   font-family: 'futura_lt_btlight';
   text-transform: capitalize;
+   text-align: left;
 }
 
 article.cotizador h3{
@@ -346,4 +348,5 @@ article.cotizador input
   top: 5px;
   left: 1px;
   width: 40px;
+	text-align: center;
 }

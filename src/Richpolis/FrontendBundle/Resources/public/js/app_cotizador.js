@@ -155,7 +155,8 @@ Productos.Views.ItemFormulario = Backbone.View.extend({
     template: swig.compile($("#formulario_template").html()),
 	events: {
       "click .productoItemCantidadUp" : "masUno",
-	  "click .productoItemCantidadDown" : "menosUno",	
+	  "click .productoItemCantidadDown" : "menosUno",
+	  "keypress input.productoItemCantidad": "actualizarCantidad", 	
     },
     initialize: function() {
         this.model.on("change", this.render, this);
@@ -176,6 +177,13 @@ Productos.Views.ItemFormulario = Backbone.View.extend({
 			this.model.set({cantidad: cantidad-1});
 		}	
     },
+	actualizarCantidad: function(e){
+		e.preventDefault();
+		var cantidad = this.$el.find('input.productoItemCantidad').val();
+		if(cantidad!==this.model.get('cantidad')){
+			this.model.set({cantidad: cantidad});
+		}
+	}
 
 });
 
