@@ -74,12 +74,31 @@ Productos.Collections.Productos = Backbone.Collection.extend({
 			}
 		});	
 	},
+	search : function(letters){
+		if(letters == "") return this;
+ 
+		var pattern = new RegExp(letters,"i");
+		return _(this.filter(function(data) {
+		  	return (pattern.test( data.get('categoria') + "  "+data.get('producto') ));
+		}));
+	}
 });
 
 //vista de la lista de productos
 Productos.Views.Buscador = Backbone.View.extend({
     el: '.buscador',
     tagName: 'article',
+	events: {
+		'keyup input.buscador': 'filtrarResultados',
+	},
+	filtrarResultados: function(e){
+		debugger;
+		var txtBuscador = document.getElementById("txtBuscador");
+		window.views.listProductos.search(txtBuscador.value);
+		//txtBuscador.value = "";
+		//e.preventDefault();
+		//e.stopPropagation();
+	},
 });
 
 //vista de un item de la lista de productos
@@ -114,6 +133,7 @@ Productos.Views.ListProductos = Backbone.View.extend({
     tagName: 'tbody',
     initialize: function() {
         this.collection.on("change", this.render, this);
+		this.textoBuscar = "";
     },
 	AddOne: function(producto) {
     	var indice = 0;
@@ -130,10 +150,20 @@ Productos.Views.ListProductos = Backbone.View.extend({
 		}	
     },
     render: function() {
-    	this.borrarViewsItems();
-        this.collection.forEach(this.AddOne,this);
-        return this;
+		/*if($("#txtBuscador").val()==""){
+			this.borrarViewsItems();
+        	this.collection.forEach(this.AddOne,this);
+			this.search($("#txtBuscador").val());
+		}
+        return this;*/
+		this.search($("#txtBuscador").val());
     },
+	renderSearch: function(productos){
+		debugger;
+		this.borrarViewsItems();
+        productos.forEach(this.AddOne,this);
+        return this;
+	},
     borrarViewsItems: function() {
     	var indice = 0;
     	if(window.views.productos && window.views.productos.length){
@@ -146,6 +176,14 @@ Productos.Views.ListProductos = Backbone.View.extend({
     		window.views.productos[cont].remove();
     	}
     },
+	search: function(filtro){
+		this.textoBuscar = filtro;
+		if(this.textoBuscar.length>0){
+			this.renderSearch(window.collections.productos.search(filtro));
+		}else{
+			this.borrarViewsItems();
+		}
+	},
 });
 
 //vista de un item de la lista de productos
@@ -254,6 +292,7 @@ Productos.Routers.App = Backbone.Router.extend({
         window.views.listFormulario = new Productos.Views.ListFormulario({
             collection: window.collections.productos,
         });
+		window.views.buscador = new Productos.Views.Buscador();
         views.listProductos.render();
         views.listFormulario.render();
     },

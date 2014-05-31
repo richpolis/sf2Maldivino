@@ -160,8 +160,8 @@ class PublicidadController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity'    => $entity,
+            'form'   	=> $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
 			'errores' => RpsStms::getErrorMessages($editForm)
         );

@@ -12,7 +12,7 @@
                 <h2>busque el producto deseado: </h2>
             </div>
             <div class="formulario col-lg-6">
-                <input type="text" class="buscador">
+                <input type="text" class="buscador" id="txtBuscador" name="txtBuscador">
             </div>
         </div>
     </article>
@@ -29,11 +29,16 @@
                 <tbody id="listaProductos">
                     
                 </tbody>
+				<tfood>
+					<tr>
+						<td colspan="3">Si requiere mayoreo <a href="{{path('frontend_contacto')}}">contáctenos</a></td>
+					</tr>
+				</tfood>
             </table>
         </article>
         <article class="cotizador  col-lg-6">
             
-            <h3 class="comentario">doble click el producto para agregar</h3>
+            <h3 class="comentario"><span class="arrow-left"></span>doble click el producto para agregar</h3>
             <table class="formulario table table-striped">
                <thead>
                    <tr>
@@ -52,12 +57,13 @@
 				</tr>
 			   </tfoot>
            </table>
-		   <button id="showFormModalCliente" class="btn btn-danger right"  data-toggle="modal" data-target="#formModalCliente">Enviar pedido</button>
-           <div id="errorFormulario" class="alert alert-danger">
-                    
+		   <div class="row comentario-cotizador">
+		   	<p>Envíenos su orden, nos comunicaremos a la brevedad.</p>
+		   </div>
+		   <button id="showFormModalCliente" class="btn btn-danger right"  data-toggle="modal" data-target="#formModalCliente">Enviar orden</button>
+            <div id="errorFormulario" class="alert alert-danger"  style="display: none">
             </div>
-            <div id="successFormulario" class="alert alert-success">
-                
+            <div id="successFormulario" class="alert alert-success"  style="display: none">
             </div>
         </article>
     </section>
@@ -122,31 +128,11 @@
 
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{asset('js/main.js')}}"></script>
-    <script src="{{asset('js/fancybox/jquery.fancybox.pack.js')}}"></script>
-    <script src="{{asset('js/fancybox/jquery.fancybox-media.js')}}"></script>
-    <script src="{{asset('js/jquery.noty.js')}}"></script>
-    <script>
-        $(document).ready(function() {
-            $("a.fancybox").fancybox();
-            $("a.fancybox-media").fancybox({
-                helpers: {
-                    media: true
-                },
-                youtube: {
-                    autoplay: 0
-                }
-            });
-        });
-
-    </script>
+{{ parent() }}
+<script src="{{asset('js/main.js')}}"></script>
 <script src="{{asset('bundles/frontend/js/app_cotizador.js')}}"></script>  
 <script type="text/javascript">
 $(function(){
-    
-    $("#successFormulario").alert('close')
-    $("#errorFormulario").alert('close')
 
 	window.api = {
       datos: [
@@ -220,8 +206,8 @@ var enviarPedido = function(){
                             views.listProductos.render();
                             views.listFormulario.render();
                             $("#successFormulario").text(data.mensaje);
-                            $("#successFormulario").alert();
-                            setTimeout(function(){$("#successFormulario").alert('close')},2000);
+                            $("#successFormulario").show();
+                            setTimeout(function(){$("#successFormulario").hide()},2000);
                         }
                         console.log(data);
                     },
@@ -230,8 +216,8 @@ var enviarPedido = function(){
                         debugger;
                         console.log(data);
                         $("#errorFormulario").text("Error al enviar formulario");
-                        $("#errorFormulario").alert();
-                        setTimeout(function(){$("#errorFormulario").alert('close')},2000);
+                        $("#errorFormulario").show();
+                        setTimeout(function(){$("#errorFormulario").hide()},2000);
                     }
                 });
             }else{

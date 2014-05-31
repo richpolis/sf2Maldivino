@@ -38,17 +38,21 @@
         {% endfor %}
         </div>
     </article>
-    <article class="promociones row">
-        {% for promocion in promociones %}
-            <div class="promocion col-lg-6">
-                <figure class="logo">
-                    <img src="{{promocion.webPath | apply_filter('promociones')}}" alt="">
-                </figure>
-                <div class="descripcion">
-                    {{promocion.descripcion | raw }}
-                </div>
-            </div>
-        {% endfor %}
+    <article class="promociones">
+	    {% for fila in promociones %}
+			<div class="row">
+			{% for promocion in fila %}
+				<div class="promocion col-lg-6">
+					<figure class="logo">
+						<img src="{{promocion.webPath | apply_filter('promociones')}}" alt="">
+					</figure>
+					<div class="descripcion">
+						{{promocion.descripcion | raw }}
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+		{% endfor %}
     </article>
 
 

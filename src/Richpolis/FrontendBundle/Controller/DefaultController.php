@@ -38,36 +38,30 @@ class DefaultController extends Controller
         
         return array(
             'pagina'=>$portada,
-			'promociones'=>$promociones,
+			'promociones'=>$this->getRegistrosPorFilas($promociones,2),
 			'anuncios'=>$anuncios,
         );
 		        
     }
 
-     private function getPublicacionesPorFilas($categorias){
+     private function getRegistrosPorFilas($registros,$porFila=3){
         $arreglo = array();
-        $largo = 0;
-        $paginas = 0;
+        $largo = count($registros);
+        $paginas = ceil($largo/$porFila);
         $contPagina = 0;
+        $arreglo[$contPagina]=array();
         $cont=0;
-        foreach($categorias as $categoria){
-            $arreglo[$categoria->getSlug()]=array();
-            $largo = count($categoria->getPublicaciones());
-            $paginas = ceil($largo/3);
-            $contPagina = 0;
-            $arreglo[$categoria->getSlug()][$contPagina]=array();
-            $cont=0;
-            foreach($categoria->getPublicaciones() as $publicacion){
-                $arreglo[$categoria->getSlug()][$contPagina][$cont++]=$publicacion;
-                if($cont==3){
-                    $cont=0;
-                    $contPagina++;
-                }
-            }
+        foreach($registros as $registro){
+             $arreglo[$contPagina][$cont++]=$registro;
+             if($cont==$porFila){
+                $cont=0;
+                $contPagina++;
+             }
         }
         return $arreglo;
     }
     
+
     
     /**
      * @Route("/quienes/somos", name="frontend_quienes_somos")

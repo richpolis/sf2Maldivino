@@ -36,7 +36,11 @@ Productos.Views.Show = Backbone.View.extend({
     
     render: function() {
         var data = this.model.toJSON();
-        this.$el.html(this.template(data));
+		var self = this;
+		this.$el.fadeOut("fast",function(){
+			self.$el.html(self.template(data));
+			self.$el.fadeIn("fast");
+		});
         return this;
     },
     seleccionarCategoria: function(){

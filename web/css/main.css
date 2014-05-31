@@ -15,6 +15,7 @@ body {
 }
 .container header.encabezado{
   margin-top: 20px;
+  position: relative;
 }
 
 .container header.encabezado .logo {
@@ -23,6 +24,13 @@ body {
 .container header.encabezado .logo img {
   max-height: 120px;
 }
+
+.container header.encabezado .twitter{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
 .container header.encabezado nav {
   width: 100%;
   height: 50px;
@@ -144,6 +152,13 @@ body {
   margin-top: 5px;
   color: #808080;
 }
+.container article.promociones .descripcion p
+{
+	line-height: 14px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .container article.quienessomos {
   margin: 10px 0px;
 }
@@ -169,14 +184,16 @@ body {
   overflow: hidden;
   margin-top: 10px;
   list-style: none;
+  min-height: 200px;	
 }
 .container article.servicios ul.servicios li.servicio .logo {
   float: left;
   width: 200px;
 }
 .container article.servicios ul.servicios li.servicio .contenido {
-  float: right;
+  float: left;
   width: 800px;
+  margin-left: 20px;	
 }
 .container article.servicios ul.servicios li.servicio .contenido h3 {
   font-family: 'bebas_neueregular';
@@ -229,8 +246,8 @@ body {
   width: 190px;
   margin: 10px auto;	
 }
-.container article.productos ul.productos li.producto img {
-  -webkit-box-shadow: 0 0 3px 2px #feedef;
+.container article.productos ul.productos li.producto img {   
+  -webkit-box-shadow: 0 0 3px 2px #feedef; 
   -moz-box-shadow: 0 0 3px 2px #feedef;
   -ms-box-shadow: 0 0 3px 2px #feedef;
   -o-box-shadow: 0 0 3px 2px #feedef;
@@ -259,8 +276,8 @@ article.contacto p{
 article.productosList{
  font-family: 'futura_lt_btlight'; 
  text-align:  left; 
- height: 400px;
- overflow: auto;
+ height: 400px;	
+ overflow: auto;	
 }
 
 article.buscador{
@@ -275,8 +292,9 @@ article.buscador h2{
 }
 
 article.buscador div.formulario{
-  background: url("../images/keyarts/buscar.png") no-repeat center center;
+  background: url("../images/keyarts/buscar.png") no-repeat left center;
   position: relative;
+  text-align: left;	
 }
 
 article.buscador input.buscador{
@@ -286,7 +304,7 @@ article.buscador input.buscador{
   padding: 5px;
   position: absolute;
   top: 13px;
-  left: 70px;
+  left: 5px;
   border: none;
 }
 
@@ -312,8 +330,20 @@ article.cotizador h3.comentario{
   font-family: 'bebas_neueregular';
   font-size: 22px;
   color: grey;
-  padding-left: 40px;
-  
+}
+
+article.cotizador h3 span.arrow-left{
+	width: 0px;
+	height: 0px;
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent;
+	border-right: 12px solid red;
+	margin-right: 10px;
+}
+article.cotizador h3.comentario,
+article.cotizador span.arrow-left{
+	display: inline-block;
+	vertical-align: top;
 }
 
 article.cotizador button.productoItemCantidadUp{
@@ -372,6 +402,14 @@ article.cotizador table.formulario td.tdImporte a.quitarProducto{
   right: 2px;
   top: 2px;
   color: #ec1b2f;
+}
+
+article.cotizador .comentario-cotizador{
+	text-align: right;
+	text-transform: lowercase;
+}
+article.cotizador .comentario-cotizador p:first-letter{
+	text-transform: uppercase;
 }
 
 #formModalCliente{

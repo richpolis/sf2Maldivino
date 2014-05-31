@@ -75,7 +75,7 @@
                                     <!-- Form starts.  -->
                                     <form action="{{ path('servicios_update', { 'id': entity.id }) }}" class="validate" id="formServicios"  method="post" {{ form_enctype(form)}}>
                                         <input name="_method" value="patch" type="hidden"/>
-                                        {{form_widget(edit_form)}}
+                                        {{form_widget(form)}}
                                     </form>
                                     <br/>
                                     {% if entity.imagen | length > 0 %}

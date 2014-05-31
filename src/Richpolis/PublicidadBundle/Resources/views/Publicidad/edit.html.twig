@@ -73,9 +73,9 @@
                             <div class="widget-content">
                                 <div class="padd">
                                     <!-- Form starts.  -->
-                                    <form action="{{ path('publicidad_update', { 'id': entity.id }) }}" class="validate" id="formPublicidad"  method="post" {{ form_enctype(edit_form)}}>
+                                    <form action="{{ path('publicidad_update', { 'id': entity.id }) }}" class="validate" id="formPublicidad"  method="post" {{ form_enctype(form)}}>
                                         <input name="_method" value="put" type="hidden"/>
-                                        {{form_widget(edit_form)}}
+                                        {{form_widget(form)}}
                                     </form>
                                     <br/>
                                     {% if entity.imagen | length > 0 %}

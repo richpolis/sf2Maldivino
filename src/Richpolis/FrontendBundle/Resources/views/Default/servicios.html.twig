@@ -12,16 +12,17 @@
         <ul class="servicios">
             {% for servicio in servicios %}
                 <li class="servicio">
+				    {% if servicio.imagen | length > 0 %}
                     <figure class="logo">
-                        {% if servicio.imagen | length > 0 %}
-                            <a href="{{servicio.webPath }}" class="fancybox">
-                            <img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
-                        {% else %}
-                            <a href="http://placehold.it/400x400&text=servicio" class="fancybox">
-                            <img src="http://placehold.it/200x200&text=servicio" alt="">
-                        {% endif %}
-                            </a>
+                       <a href="{{servicio.webPath }}" class="fancybox">
+                          <img src="{{servicio.webPath  | apply_filter('servicios')}}" alt="{{servicio.servicio}}">
+                       </a>
                     </figure>
+					{% else %}
+					<figure class="logo">
+                       <img src="http://placehold.it/200x200/ffffff/ffffff&text=sin imagen" alt="">
+                    </figure>
+					{% endif %}
                     <div class="contenido">
                         <h3>{{servicio.servicio}}</h3>
                         {{ servicio.descripcion | raw }}
